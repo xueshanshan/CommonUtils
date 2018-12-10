@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme.AppWhiteTheme">
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <!--控制状态栏文字和图标的颜色,避免与状态栏背景冲突。低版本中状态栏不要设置为白色 v23+ -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
