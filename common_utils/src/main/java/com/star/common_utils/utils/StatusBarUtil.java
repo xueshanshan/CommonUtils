@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
  * @date 2018/12/5
  */
 public class StatusBarUtil {
+    private StatusBarUtil() {
+    }
 
     /**
      * 设置状态栏颜色，4.4以上起作用

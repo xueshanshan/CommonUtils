@@ -5,4 +5,8 @@ package com.star.common_utils.utils;
  * @date 2018/12/10
  */
 public class AppInfoUtil {
+    private AppInfoUtil() {
+    }
+
+
 }

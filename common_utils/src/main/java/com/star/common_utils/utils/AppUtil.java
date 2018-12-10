@@ -8,6 +8,9 @@ import android.util.TypedValue;
  * @date 2018/12/10
  */
 public class AppUtil {
+    private AppUtil() {
+    }
+
     public static int dp2px(int dpValue, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
     }

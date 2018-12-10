@@ -11,6 +11,9 @@ import android.widget.EditText;
  * @date 2018/12/10
  */
 public class KeyboardUtil {
+    private KeyboardUtil() {
+    }
+
     /**
      * 打开软键盘
      *

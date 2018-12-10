@@ -8,6 +8,9 @@ import android.util.TypedValue;
  * @date 2018/12/10
  */
 public class UIUtil {
+    private UIUtil() {
+    }
+
     /**
      * 获取attr的值
      *
