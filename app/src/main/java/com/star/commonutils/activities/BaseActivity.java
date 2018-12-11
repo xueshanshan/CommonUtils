@@ -47,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return 返回获取的状态栏颜色
      */
     protected int getStatusBarColor() {
-        return UIUtil.getThemeColorByAttrId(getTheme(), R.attr.colorPrimaryDark);
+        return UIUtil.getThemeAttr(this, R.attr.colorPrimaryDark);
     }
 
     /**

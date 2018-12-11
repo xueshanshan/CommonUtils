@@ -30,8 +30,8 @@ public class FlowLayout extends ViewGroup {
         super(context, attrs, defStyleAttr);
         mContext = context;
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FlowLayout);
-        mWidthMargin = array.getDimension(R.styleable.FlowLayout_width_margin, AppUtil.dp2px(10, context));
-        mHeightMargin = array.getDimension(R.styleable.FlowLayout_height_margin, AppUtil.dp2px(10, context));
+        mWidthMargin = array.getDimension(R.styleable.FlowLayout_width_margin, AppUtil.dp2px(context, 10));
+        mHeightMargin = array.getDimension(R.styleable.FlowLayout_height_margin, AppUtil.dp2px(context, 10));
         array.recycle();
     }
 
@@ -75,7 +75,7 @@ public class FlowLayout extends ViewGroup {
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
         if (widthMode != MeasureSpec.EXACTLY) {
-            width = AppUtil.dp2px(200, mContext);
+            width = AppUtil.dp2px(mContext,200);
         }
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
