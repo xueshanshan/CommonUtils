@@ -1,6 +1,10 @@
 package com.star.common_utils.utils;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -116,5 +120,31 @@ public class IOUtil {
         } finally {
             close(writer);
         }
+    }
+
+    /**
+     * 读取assets文件
+     *
+     * @param context  上下文
+     * @param filepath 文件路径
+     * @return 返回读取的String结果
+     */
+    public static String readAssetsFile(Context context, String filepath) {
+        BufferedReader reader = null;
+        String str = "";
+        StringBuilder buf = new StringBuilder();
+        AssetManager manager = context.getAssets();
+        try {
+            reader = new BufferedReader(new InputStreamReader(manager.open(filepath), "UTF-8"));
+            while ((str = reader.readLine()) != null) {
+                buf.append(str);
+            }
+            str = buf.toString();
+        } catch (IOException e) {
+            LogUtil.e("readAssetsFile", e);
+        } finally {
+            close(reader);
+        }
+        return str;
     }
 }
