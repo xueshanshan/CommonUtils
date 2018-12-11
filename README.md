@@ -1,6 +1,6 @@
 ### 基本功能记录
 
-####util相关
+#### util相关
 - App基本信息工具 `AppInfoUtil`
 - 状态栏相关（透明状态栏、状态栏着色） `StatusBarUtil`
 - 日志打印工具 `LogUtil`
