@@ -12,6 +12,7 @@
 
 #### UI相关
 - 流式布局 `FlowLayout`
+- 轮询banner `WheelViewPager`
 
 #### 配置相关
 - gradle基本配置
