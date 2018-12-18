@@ -281,7 +281,7 @@ public class WheelViewPager<T> extends ViewPager {
     //重写这个方法是为了手指放在上面不动的时候，是否停止播放
     //如果手指动的话会触发onPageScrollStateChanged的SCROLL_STATE_DRAGGING，然后会停止播放
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             /*
                如果是down事件，那么就停止滑动，
@@ -295,7 +295,7 @@ public class WheelViewPager<T> extends ViewPager {
                 tryStartPlay();
                 break;
         }
-        return super.onInterceptTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     private class WheelPagerAdapter extends PagerAdapter {
