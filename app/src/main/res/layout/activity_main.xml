@@ -19,5 +19,13 @@
             android:text="透明状态栏界面"
             android:textColor="@android:color/white" />
 
+        <TextView
+            android:id="@+id/btn_wheel_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_flow_bg"
+            android:text="轮询banner"
+            android:textColor="@android:color/white" />
+
     </com.star.common_utils.widget.FlowLayout>
 </ScrollView>

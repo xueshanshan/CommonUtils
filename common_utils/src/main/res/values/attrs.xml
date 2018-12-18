@@ -4,4 +4,10 @@
         <attr name="width_margin" format="dimension" />
         <attr name="height_margin" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="WheelViewPager">
+        <attr name="play_interval" format="integer" />
+        <attr name="page_loop" format="boolean" />
+        <attr name="scroll_duration" format="integer" />
+    </declare-styleable>
 </resources>

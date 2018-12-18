@@ -13,7 +13,7 @@ import com.star.commonutils.R;
  */
 public class TranslucentStatusBarActivity extends BaseActivity {
 
-    public static Intent getActivityIntent(Context context) {
+    public static Intent makeIntent(Context context) {
         return new Intent(context, TranslucentStatusBarActivity.class);
     }
 
