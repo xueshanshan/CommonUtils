@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
@@ -275,6 +276,26 @@ public class WheelViewPager<T> extends ViewPager {
                 stopPlay();
             }
         }
+    }
+
+    //重写这个方法是为了手指放在上面不动的时候，是否停止播放
+    //如果手指动的话会触发onPageScrollStateChanged的SCROLL_STATE_DRAGGING，然后会停止播放
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            /*
+               如果是down事件，那么就停止滑动，
+               up或者cancel事件，继续滑动
+             */
+            case MotionEvent.ACTION_DOWN:
+                stopPlay();
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                tryStartPlay();
+                break;
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
     private class WheelPagerAdapter extends PagerAdapter {
