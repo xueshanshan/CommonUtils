@@ -113,6 +113,13 @@ public class WheelViewPager<T> extends ViewPager {
      * @param datas 数据源
      */
     public void setData(List<T> datas) {
+        if (datas == null) {
+            return;
+        }
+        //数量一致的话就不做操作，通过滑动来自己去更新图片
+        if (mDatas != null && mDatas.size() == datas.size()) {
+            return;
+        }
         //先停止播放
         stopPlay();
 

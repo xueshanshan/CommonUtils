@@ -48,6 +48,7 @@ public class BannersActivity extends BaseActivity implements WheelViewPager.Whee
         mDatas.add(getRandomColor());
         mViewPager.setAdapter(this);
         mViewPager.setData(mDatas);
+        findViewById(R.id.tv_reset_equal_count).setOnClickListener(this);
         findViewById(R.id.tv_add).setOnClickListener(this);
         findViewById(R.id.tv_reduce).setOnClickListener(this);
     }
@@ -82,6 +83,11 @@ public class BannersActivity extends BaseActivity implements WheelViewPager.Whee
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_reset_equal_count:
+                mDatas.set(0, getRandomColor());
+                mViewPager.setData(mDatas);
+                Toast.makeText(this, "已经重设", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.tv_add:
                 mDatas.add(getRandomColor());
                 mViewPager.setData(mDatas);

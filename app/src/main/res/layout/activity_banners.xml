@@ -13,6 +13,16 @@
         app:play_interval="3000" />
 
     <TextView
+        android:id="@+id/tv_reset_equal_count"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="重设相同个数数据源"
+        android:textColor="@android:color/white" />
+
+    <TextView
         android:id="@+id/tv_reduce"
         android:layout_width="match_parent"
         android:layout_height="50dp"
