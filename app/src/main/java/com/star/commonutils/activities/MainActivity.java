@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.star.commonutils.R;
 
+
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
@@ -13,7 +14,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_translucent_status).setOnClickListener(this);
         findViewById(R.id.btn_wheel_banner).setOnClickListener(this);
+        findViewById(R.id.edit_img).setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -23,6 +26,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btn_wheel_banner:
                 startActivity(BannersActivity.makeIntent(this));
+                break;
+            case R.id.edit_img:
+                startActivity(DispatcherActivity.makeIntent(this, DispatcherActivity.DISPATCH_EDIT_IMAGE));
                 break;
         }
     }

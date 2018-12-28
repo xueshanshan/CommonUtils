@@ -15,20 +15,12 @@ public class FileUtil {
      * 创建文件夹
      *
      * @param path 文件夹路径
-     * @return 返回是否创建成果
+     * @return 返回是否创建成功
      */
     public static boolean makeDirIfNotExist(String path) {
         File rootDirFile = new File(path);
         if (!rootDirFile.exists()) {
-            return rootDirFile.mkdir();
-        } else {
-            if (!rootDirFile.isDirectory()) {
-                if (rootDirFile.delete()) {
-                    return rootDirFile.mkdir();
-                }
-            } else {
-                return true;
-            }
+            return rootDirFile.mkdirs();
         }
         return false;
     }

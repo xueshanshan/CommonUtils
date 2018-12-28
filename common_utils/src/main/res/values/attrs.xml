@@ -10,4 +10,17 @@
         <attr name="page_loop" format="boolean" />
         <attr name="scroll_duration" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="EditImageView">
+        <attr name="fit_mode">
+            <enum name="no_limit" value="0" />
+            <enum name="fit_long" value="1" />
+            <enum name="fit_short" value="2" />
+        </attr>
+        <attr name="line_color" format="color" />
+        <attr name="line_width" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="mask_color" format="color" />
+        <attr name="is_round" format="boolean" />
+    </declare-styleable>
 </resources>

@@ -16,6 +16,9 @@ public class LogUtil {
     private static String sGlobalTag;
     private static final String LEVEL_V = "V", LEVEL_D = "D", LEVEL_I = "I", LEVEL_E = "E";
 
+    private LogUtil() {
+    }
+
     public static class Builder {
         private boolean mIsSimpleLog = true;
         private boolean mIsDebug = false;

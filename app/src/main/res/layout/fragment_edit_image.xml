@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.star.common_utils.widget.EditImageView
+        android:id="@+id/edit_img_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:fit_mode="fit_short"
+        app:line_color="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_rotate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="旋转"
+        android:textColor="@android:color/white"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="保存图片"
+        android:textColor="@android:color/white"
+        android:textSize="18dp" />
+</LinearLayout>

@@ -1,1 +1,1 @@
-include ':app', ':common_utils'
+include ':app', ':common_utils', 'xpermission'
