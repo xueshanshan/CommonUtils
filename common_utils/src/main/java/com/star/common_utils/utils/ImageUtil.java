@@ -155,37 +155,7 @@ public class ImageUtil {
         RectF dst = new RectF(0, 0, r - l, b - t);
         canvas.drawBitmap(origBmp, src, dst, new Paint());
 
-        //或者
-//        Matrix centerCropMatrix = getCenterCropMatrix(origBmp, destWidth, destHeight);
-//        canvas.drawBitmap(origBmp, centerCropMatrix, new Paint());
-
         return destBmp;
-    }
-
-    public static Matrix getCenterCropMatrix(Bitmap origBmp, int destWidth, int destHeight) {
-        Matrix matrix = new Matrix();
-
-        int resW = origBmp.getWidth();
-        int resH = origBmp.getHeight();
-
-        float scale = 1.0f;
-        float dx = 0f;
-        float dy = 0f;
-
-        if (resW >= destWidth && resH >= destHeight) {
-            scale = destWidth * 1f / resW;
-            dx = (resW - scale * resW) / 2;
-            dy = (resH - scale * resH) / 2;
-        } else if (resW >= destWidth) {
-            dx = (resW - scale * resW) / 2;
-        } else if (resH >= destHeight) {
-            dy = (resH - scale * resH) / 2;
-        }
-
-        matrix.postScale(scale, scale);
-        matrix.postTranslate(dx, dy);
-
-        return matrix;
     }
 
     public static Bitmap generateBitmapByMatrix(Bitmap origBmp, int destWidth, int destHeight, Matrix matrix) {
