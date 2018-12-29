@@ -35,5 +35,14 @@
             android:text="图片编辑"
             android:textColor="@android:color/white" />
 
+        <TextView
+            android:id="@+id/swipe_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tv_flow_bg"
+            android:text="滑动返回"
+            android:textColor="@android:color/white" />
+
+
     </com.star.common_utils.widget.FlowLayout>
 </ScrollView>

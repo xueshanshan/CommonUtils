@@ -3,9 +3,7 @@ package com.star.commonutils.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.star.common_utils.utils.ImageUtil;
@@ -29,15 +27,18 @@ public class EditImageFragment extends BaseFragment implements View.OnClickListe
         return new EditImageFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_image, container, false);
+    protected int getLayoutId() {
+        return R.layout.fragment_edit_image;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mEditImageView = view.findViewById(R.id.edit_img_view);
         mEditImageView.init(ImageUtil.decodeResource(getContext(), R.drawable.banner, 650, 464));
         view.findViewById(R.id.tv_rotate).setOnClickListener(this);
         view.findViewById(R.id.tv_save).setOnClickListener(this);
-        return view;
     }
 
     @Override
@@ -52,6 +53,10 @@ public class EditImageFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
+    @Override
+    protected boolean enableSwipeBack() {
+        return false;
+    }
 
     @Override
     public void onPermissionGranted(int reqCode) {

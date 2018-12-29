@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.star.commonutils.R;
 import com.star.commonutils.fragments.EditImageFragment;
+import com.star.commonutils.fragments.SwipeFirstFragment;
 
 /**
  * @author xueshanshan
@@ -19,11 +20,23 @@ import com.star.commonutils.fragments.EditImageFragment;
 public class DispatcherActivity extends BaseActivity {
     public static final String DISPATCHER = "dispatcher";
     public static final String DISPATCH_EDIT_IMAGE = "edit_img";
+    public static final String DISPATCH_SWIPE_DELETE = "swipe_delete";
+    private String mType;
 
     public static Intent makeIntent(Context context, String dispatcher) {
         Intent intent = new Intent(context, DispatcherActivity.class);
         intent.putExtra(DISPATCHER, dispatcher);
         return intent;
+    }
+
+    @Override
+    protected boolean needSetStatusBarColor() {
+        return false;
+    }
+
+    @Override
+    protected boolean needTranslucentStatusBar() {
+        return true;
     }
 
     @Override
@@ -34,14 +47,18 @@ public class DispatcherActivity extends BaseActivity {
             finish();
             return;
         }
-        String stringExtra = getIntent().getStringExtra(DISPATCHER);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        switch (stringExtra) {
+        mType = getIntent().getStringExtra(DISPATCHER);
+        dispatch();
+    }
+
+    private void dispatch() {
+        switch (mType) {
             case DISPATCH_EDIT_IMAGE:
-                transaction.add(R.id.fragment_container,EditImageFragment.getInstance(), stringExtra);
+                launch(EditImageFragment.getInstance(), R.id.fragment_container);
+                break;
+            case DISPATCH_SWIPE_DELETE:
+                launch(SwipeFirstFragment.getInstance(), R.id.fragment_container);
                 break;
         }
-        transaction.commit();
     }
 }

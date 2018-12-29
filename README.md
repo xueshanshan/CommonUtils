@@ -16,6 +16,7 @@
 - 流式布局 [FlowLayout](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/FlowLayout.java)
 - 轮询banner [WheelViewPager](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/WheelViewPager.java)
 - 图片裁剪 [EditImageView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/EditImageView.java)
+- 滑动删除 [SwipeBackLayout](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/SwipeBackLayout.java)
 
 #### 配置相关
 - gradle基本配置

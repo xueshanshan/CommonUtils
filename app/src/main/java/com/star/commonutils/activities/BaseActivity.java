@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.star.common_utils.utils.StatusBarUtil;
 import com.star.common_utils.utils.UIUtil;
 import com.star.commonutils.R;
+import com.star.commonutils.fragments.BaseFragment;
 
 /**
  * @author xueshanshan
@@ -57,5 +58,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected boolean isNeedAddStatusBarView() {
         return true;
+    }
+
+
+    /**
+     * Activity中添加fragment
+     *
+     * @param fragment  fragment对象
+     * @param container fragment放置在的view的id
+     */
+    protected void launch(BaseFragment fragment, int container) {
+        getSupportFragmentManager().beginTransaction()
+                .add(container, fragment)
+                .commit();
     }
 }
