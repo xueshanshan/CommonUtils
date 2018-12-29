@@ -141,7 +141,7 @@ public class WheelViewPager<T> extends ViewPager {
 
         //如果是循环播放，需要从第一个item进行显示，因为第0个显示的是最后一个
         if (mPageLoop) {
-            setCurrentItem(1);
+            setCurrentItem(1, false);
         }
 
         //开始播放
