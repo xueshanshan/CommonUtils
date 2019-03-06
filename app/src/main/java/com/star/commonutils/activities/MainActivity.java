@@ -16,6 +16,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_wheel_banner).setOnClickListener(this);
         findViewById(R.id.edit_img).setOnClickListener(this);
         findViewById(R.id.swipe_delete).setOnClickListener(this);
+        findViewById(R.id.custom_view).setOnClickListener(this);
     }
 
 
@@ -33,6 +34,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.swipe_delete:
                 startActivity(DispatcherActivity.makeIntent(this, DispatcherActivity.DISPATCH_SWIPE_DELETE));
+                break;
+            case R.id.custom_view:
+                startActivity(DispatcherActivity.makeIntent(this, DispatcherActivity.DISPATCH_CUSTOM_VIEW));
                 break;
         }
     }

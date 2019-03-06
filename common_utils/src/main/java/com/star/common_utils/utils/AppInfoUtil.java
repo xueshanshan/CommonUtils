@@ -16,27 +16,37 @@ import com.star.common_utils.BuildConfig;
  * @date 2018/12/10
  */
 public class AppInfoUtil {
-    private static Context sContext;
+    private static boolean inited;
+    public static Context sContext;
 
-    private static int sProcessId = -1;
-    private static String sProcessName = "";
-    private static String sDeviceId = "";
+    public static int sProcessId = -1;
+    public static String sProcessName = "";
+    public static String sDeviceId = "";
 
-    private static String sVersionName = "";
-    private static int sVersionCode;
-    private static String sPackageName = "";
-    private static String sAppName = "";
-    private static String sApplicationLabel = "";
-    private static boolean sDebuggable;
+    public static PackageInfo packageInfo;
+    public static String sVersionName = "";
+    public static int sVersionCode;
+    public static String sPackageName = "";
+    public static String sAppName = "";
+    public static String sApplicationLabel = "";
+    public static boolean sDebuggable;
 
-    private static int sStatusBarHeight;
-    private static int sNavigationBarHeight;
-    private static int sActionBarHeight;
+    //从meta-data中获取  应用需要配置对应的meta-data
+    public static String sVersionType = "";
+    public static String sAppBuildTime = "";
+    public static String sUMengChannel = "";
+    public static String sPackageFrom = "";
+    public static String sAppBranch = "";
+    public static String sAppCommitId = "";
 
-    private static int sScreenRealWidth;
-    private static int sScreenRealHeight;
-    private static int sScreenAvailableWidth;
-    private static int sScreenAvailableHeight;
+    public static int sStatusBarHeight;
+    public static int sNavigationBarHeight;
+    public static int sActionBarHeight;
+
+    public static int sScreenRealWidth;
+    public static int sScreenRealHeight;
+    public static int sScreenAvailableWidth;
+    public static int sScreenAvailableHeight;
 
     private AppInfoUtil() {
     }
@@ -47,6 +57,10 @@ public class AppInfoUtil {
      * @param context 上下文
      */
     public static void init(Context context) {
+        if (inited) {
+            return;
+        }
+        inited = true;
         sContext = context.getApplicationContext();
         initProcess();
         sDeviceId = Settings.Secure.getString(sContext.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -65,7 +79,8 @@ public class AppInfoUtil {
         if (TextUtils.isEmpty(sVersionName)) {
             try {
                 PackageManager packageManager = sContext.getPackageManager();
-                PackageInfo packageInfo = packageManager.getPackageInfo(sContext.getPackageName(), 0);
+                packageInfo = packageManager.getPackageInfo(sContext.getPackageName(), 0);
+
                 sVersionName = packageInfo.versionName;
                 sVersionCode = packageInfo.versionCode;
                 sPackageName = packageInfo.packageName;
@@ -73,10 +88,25 @@ public class AppInfoUtil {
                 ApplicationInfo applicationInfo = packageManager.getApplicationInfo(sPackageName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
                 sApplicationLabel = packageManager.getApplicationLabel(applicationInfo).toString();
                 sDebuggable = BuildConfig.DEBUG;
+
+                ApplicationInfo appInfo = packageManager.getApplicationInfo(sContext.getPackageName(), PackageManager.GET_META_DATA);
+                sUMengChannel = getMetaDataField(appInfo, "UMENG_CHANNEL");
+                sVersionType = getMetaDataField(appInfo, "VERSION_TYPE");
+                sAppCommitId = getMetaDataField(appInfo, "COMMIT_ID");
+                sPackageFrom = getMetaDataField(appInfo, "PACKAGE_FROM");
+                sAppBranch = getMetaDataField(appInfo, "BRANCH");
+                sAppBuildTime = getMetaDataField(appInfo, "BUILD_TIME");
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getMetaDataField(ApplicationInfo appInfo, String key) {
+        if (appInfo.metaData.containsKey(key)) {
+            return String.valueOf(appInfo.metaData.get(key));
+        }
+        return "";
     }
 
     private static void initScreenSize() {
@@ -100,74 +130,6 @@ public class AppInfoUtil {
         }
     }
 
-    public static Context getContext() {
-        return sContext;
-    }
-
-    public static int getProcessId() {
-        return sProcessId;
-    }
-
-    public static String getProcessName() {
-        return sProcessName;
-    }
-
-    public static String getDeviceId() {
-        return sDeviceId;
-    }
-
-    public static String getVersionName() {
-        return sVersionName;
-    }
-
-    public static int getVersionCode() {
-        return sVersionCode;
-    }
-
-    public static String getPackageName() {
-        return sPackageName;
-    }
-
-    public static String getAppName() {
-        return sAppName;
-    }
-
-    public static String getApplicationLabel() {
-        return sApplicationLabel;
-    }
-
-    public static boolean isDebuggable() {
-        return sDebuggable;
-    }
-
-    public static int getStatusBarHeight() {
-        return sStatusBarHeight;
-    }
-
-    public static int getNavigationBarHeight() {
-        return sNavigationBarHeight;
-    }
-
-    public static int getActionBarHeight() {
-        return sActionBarHeight;
-    }
-
-    public static int getScreenRealWidth() {
-        return sScreenRealWidth;
-    }
-
-    public static int getScreenRealHeight() {
-        return sScreenRealHeight;
-    }
-
-    public static int getScreenAvailableWidth() {
-        return sScreenAvailableWidth;
-    }
-
-    public static int getScreenAvailableHeight() {
-        return sScreenAvailableHeight;
-    }
-
     public static String intoToString() {
         return "AppInfoUtil{" +
                 "\ncontext=" + sContext +
@@ -179,6 +141,8 @@ public class AppInfoUtil {
                 "\npackageName=" + sPackageName +
                 "\nappName=" + sAppName +
                 "\napplicationLabel=" + sApplicationLabel +
+                "\nsVersionType=" + sVersionType +
+                "\nsUMengChannel=" + sUMengChannel +
                 "\ndeviceId=" + sDeviceId +
                 "\nscreenRealWidth=" + sScreenRealWidth +
                 "\nscreenRealHeight=" + sScreenRealHeight +

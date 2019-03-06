@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.star.commonutils.R;
 import com.star.commonutils.fragments.EditImageFragment;
 import com.star.commonutils.fragments.SwipeFirstFragment;
+import com.star.commonutils.fragments.CustomViewFragment;
 
 /**
  * @author xueshanshan
@@ -21,6 +20,7 @@ public class DispatcherActivity extends BaseActivity {
     public static final String DISPATCHER = "dispatcher";
     public static final String DISPATCH_EDIT_IMAGE = "edit_img";
     public static final String DISPATCH_SWIPE_DELETE = "swipe_delete";
+    public static final String DISPATCH_CUSTOM_VIEW = "custom_view";
     private String mType;
 
     public static Intent makeIntent(Context context, String dispatcher) {
@@ -58,6 +58,9 @@ public class DispatcherActivity extends BaseActivity {
                 break;
             case DISPATCH_SWIPE_DELETE:
                 launch(SwipeFirstFragment.getInstance(), R.id.fragment_container);
+                break;
+            case DISPATCH_CUSTOM_VIEW:
+                launch(CustomViewFragment.getInstance(), R.id.fragment_container);
                 break;
         }
     }

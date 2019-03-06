@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.star.common_utils.widget.VerificationCodeView
+        android:id="@+id/verify_code_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textSize="50sp"
+        app:verify_error_color="@color/colorAccent"
+        app:verify_error_text_size="15sp"
+        app:verify_height="60dp"
+        app:verify_margin="30dp"
+        app:verify_normal_color="@color/colorPrimary"
+        app:verify_num="5"
+        app:verify_width="50dp" />
+</LinearLayout>

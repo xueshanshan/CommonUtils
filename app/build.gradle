@@ -18,6 +18,9 @@ android {
     }
     //配置签名
     signingConfigs {
+        debug {
+
+        }
         release {
             storeFile file('../common_utils.jks')
             storePassword "${JKS_PASSWORD}"
@@ -31,17 +34,18 @@ android {
             minifyEnabled false
             shrinkResources false
             buildConfigField 'boolean', 'BUILD_DEBUG', 'true'  //添加BuildConfig配置
+            signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled true
             shrinkResources true
             buildConfigField 'boolean', 'BUILD_DEBUG', 'false'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         buildTypes.all {
             type ->
                 manifestPlaceholders = [VERSION_TYPE_VALUE: name]
-                signingConfig signingConfigs.release
         }
     }
 

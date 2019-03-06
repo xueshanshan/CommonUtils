@@ -23,4 +23,18 @@
         <attr name="mask_color" format="color" />
         <attr name="is_round" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="VerificationCodeView">
+        <attr name="verify_num" format="integer" />
+        <attr name="android:textSize" />
+        <attr name="verify_normal_bg" format="reference" />
+        <attr name="verify_highlight_bg" format="reference" />
+        <attr name="verify_error_bg" format="reference" />
+        <attr name="verify_normal_color" format="color" />
+        <attr name="verify_error_color" format="color" />
+        <attr name="verify_width" format="dimension" />
+        <attr name="verify_height" format="dimension" />
+        <attr name="verify_margin" format="dimension" />
+        <attr name="verify_error_text_size" format="dimension" />
+    </declare-styleable>
 </resources>

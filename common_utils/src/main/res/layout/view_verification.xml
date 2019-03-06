@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/tv_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" />
+
+    <EditText
+        android:id="@+id/verify_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_container"
+        android:layout_alignTop="@+id/tv_container"
+        android:layout_alignRight="@+id/tv_container"
+        android:layout_alignBottom="@+id/tv_container"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:inputType="number"
+        android:textCursorDrawable="@drawable/verify_edit_cursor" />
+
+    <TextView
+        android:id="@+id/tv_error_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/verify_edit_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="验证码错误，请重新输入"
+        android:textSize="12dp"
+        android:visibility="invisible" />
+
+</merge>
