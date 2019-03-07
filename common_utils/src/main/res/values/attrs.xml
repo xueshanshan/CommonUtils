@@ -37,4 +37,13 @@
         <attr name="verify_margin" format="dimension" />
         <attr name="verify_error_text_size" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ChrysanthemumLoadingView">
+        <attr name="default_color" format="color" />
+        <attr name="seg_length" format="dimension" />
+        <attr name="seg_space" format="dimension" />
+        <attr name="seg_width" format="dimension" />
+        <attr name="seg_count" format="integer" />
+        <attr name="animate_duration" format="integer" />
+    </declare-styleable>
 </resources>

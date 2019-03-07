@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.star.common_utils.R;
+import com.star.common_utils.utils.AppUtil;
 
 /**
  * @author xueshanshan
@@ -70,17 +71,17 @@ public class VerificationCodeView extends RelativeLayout implements TextWatcher,
 
     private void initAttrs(AttributeSet attrs) {
         TypedArray array = mContext.obtainStyledAttributes(attrs, R.styleable.VerificationCodeView);
-        mVerifyNum = array.getInt(R.styleable.VerificationCodeView_verify_num, 4);
-        mTextSize = array.getDimension(R.styleable.VerificationCodeView_android_textSize, 81);
+        mVerifyNum = array.getInt(R.styleable.VerificationCodeView_verify_num, AppUtil.dp2px(mContext, 4));
+        mTextSize = array.getDimension(R.styleable.VerificationCodeView_android_textSize, AppUtil.sp2px(mContext, 27));
         mVerifyNormalBg = array.getResourceId(R.styleable.VerificationCodeView_verify_normal_bg, R.drawable.verify_normal_bg);
         mVerifyHighlightBg = array.getResourceId(R.styleable.VerificationCodeView_verify_highlight_bg, R.drawable.verify_highlight_bg);
         mVerifyErrorBg = array.getResourceId(R.styleable.VerificationCodeView_verify_error_bg, R.drawable.verify_error_bg);
         mVerifyNormalColor = array.getColor(R.styleable.VerificationCodeView_verify_normal_color, Color.BLACK);
         mVerifyErrorColor = array.getColor(R.styleable.VerificationCodeView_verify_error_color, Color.parseColor("#FF7B1A"));
-        mVerifyWidth = array.getDimension(R.styleable.VerificationCodeView_verify_width, 108);
-        mVerifyHeight = array.getDimension(R.styleable.VerificationCodeView_verify_height, 138);
-        mVerifyMargin = array.getDimension(R.styleable.VerificationCodeView_verify_margin, 39);
-        mVerifyErrorTextSize = array.getDimension(R.styleable.VerificationCodeView_verify_error_text_size, 36);
+        mVerifyWidth = array.getDimension(R.styleable.VerificationCodeView_verify_width, AppUtil.dp2px(mContext, 36));
+        mVerifyHeight = array.getDimension(R.styleable.VerificationCodeView_verify_height, AppUtil.dp2px(mContext, 49));
+        mVerifyMargin = array.getDimension(R.styleable.VerificationCodeView_verify_margin, AppUtil.dp2px(mContext, 12));
+        mVerifyErrorTextSize = array.getDimension(R.styleable.VerificationCodeView_verify_error_text_size, AppUtil.sp2px(mContext, 12));
         array.recycle();
     }
 
