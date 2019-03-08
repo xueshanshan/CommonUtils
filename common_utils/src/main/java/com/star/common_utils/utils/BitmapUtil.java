@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
  * @author xueshanshan
  * @date 2018/12/26
  */
-public class ImageUtil {
+public class BitmapUtil {
     public static final int decodeMode_min_floor = 0; //取小值，并floor，质量最好
     public static final int decodeMode_min_round = 1; //取小值，并四舍五入，质量次之
     public static final int decodeMode_min_ceil = 2; //取小值，并ceil，质量更次
@@ -37,7 +38,7 @@ public class ImageUtil {
     @Retention(RetentionPolicy.SOURCE)
     public @interface ImgDecodeMode {}
 
-    private ImageUtil() {
+    private BitmapUtil() {
     }
 
     public static Bitmap decodeResource(Context context, Integer imgResID, int width, int height) {
@@ -188,5 +189,25 @@ public class ImageUtil {
             IOUtil.close(out);
         }
         return status;
+    }
+
+    /**
+     * 根据view的布局创建bitmap
+     * @param view
+     * @param width
+     * @param height
+     * @return
+     */
+    public static Bitmap createBitmapByView(View view, int width, int height) {
+        view.measure(width, height);
+        view.layout(0, 0, width, height);
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        return view.getDrawingCache();
+    }
+
+    public static void destroyDrawingCacheByView(View view) {
+        view.destroyDrawingCache();
+        view.setDrawingCacheEnabled(false);
     }
 }

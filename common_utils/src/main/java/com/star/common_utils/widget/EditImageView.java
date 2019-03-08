@@ -22,7 +22,7 @@ import android.view.View;
 
 import com.star.common_utils.R;
 import com.star.common_utils.utils.AppUtil;
-import com.star.common_utils.utils.ImageUtil;
+import com.star.common_utils.utils.BitmapUtil;
 import com.star.common_utils.utils.MatrixUtil;
 
 import java.lang.annotation.Retention;
@@ -459,7 +459,7 @@ public class EditImageView extends View {
     }
 
     public boolean saveBitmap(String dirPath) {
-        Bitmap bitmap = ImageUtil.generateBitmapByMatrix(srcBitmap, stdWidth, stdHeight, getCropMatrix());
-        return ImageUtil.saveBitmap(bitmap, dirPath + System.currentTimeMillis() + ".jpg", Bitmap.CompressFormat.JPEG, 80);
+        Bitmap bitmap = BitmapUtil.generateBitmapByMatrix(srcBitmap, stdWidth, stdHeight, getCropMatrix());
+        return BitmapUtil.saveBitmap(bitmap, dirPath + System.currentTimeMillis() + ".jpg", Bitmap.CompressFormat.JPEG, 80);
     }
 }

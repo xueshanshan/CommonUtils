@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
 
-import com.star.common_utils.utils.ImageUtil;
+import com.star.common_utils.utils.BitmapUtil;
 import com.star.common_utils.utils.StorageUtil;
 import com.star.common_utils.widget.EditImageView;
 import com.star.commonutils.R;
@@ -36,7 +36,7 @@ public class EditImageFragment extends BaseFragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEditImageView = view.findViewById(R.id.edit_img_view);
-        mEditImageView.init(ImageUtil.decodeResource(getContext(), R.drawable.banner, 650, 464));
+        mEditImageView.init(BitmapUtil.decodeResource(getContext(), R.drawable.banner, 650, 464));
         view.findViewById(R.id.tv_rotate).setOnClickListener(this);
         view.findViewById(R.id.tv_save).setOnClickListener(this);
     }
