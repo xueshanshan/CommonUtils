@@ -18,9 +18,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (needSetStatusBarColor()) {
-            StatusBarUtil.setStatusBarColor(getWindow(), getStatusBarColor(), isNeedAddStatusBarView());
+            StatusBarUtil.setStatusBarColor(getWindow(), getStatusBarColor(), isNeedAddStatusBarView(), needStatusBarBlackText());
         } else if (needTranslucentStatusBar()) {
-            StatusBarUtil.translucentStatusBar(getWindow());
+            StatusBarUtil.translucentStatusBar(getWindow(), needStatusBarBlackText());
         }
     }
 
@@ -31,15 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected boolean needSetStatusBarColor() {
         return true;
-    }
-
-    /**
-     * 暴露给子类可以重写
-     *
-     * @return 是否需要透明状态栏
-     */
-    protected boolean needTranslucentStatusBar() {
-        return false;
     }
 
     /**
@@ -58,6 +49,25 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected boolean isNeedAddStatusBarView() {
         return true;
+    }
+
+    /**
+     * 暴露给子类可以重写
+     *
+     * @return 是否需要透明状态栏
+     */
+    protected boolean needTranslucentStatusBar() {
+        return false;
+    }
+
+
+    /**
+     * 暴露给子类可以重写
+     *
+     * @return 状态栏文字是否显示黑色
+     */
+    protected boolean needStatusBarBlackText() {
+        return false;
     }
 
 

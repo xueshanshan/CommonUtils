@@ -26,10 +26,13 @@ public class StatusBarUtil {
      * @param color     状态栏颜色值  这个色值可以从style中获取colorPrimaryDark的值
      * @param isAddView 对于5.0以下是否要绘制一个带颜色的状态栏，一般情况下需要，在activity是半截的情况下可能不需要
      */
-    public static void setStatusBarColor(Window window, int color, boolean isAddView) {
+    public static void setStatusBarColor(Window window, int color, boolean isAddView, boolean statusBarBlackText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //5.0及以上，不设置透明状态栏，设置会有半透明阴影
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            if (statusBarBlackText && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
             window.setStatusBarColor(color);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -51,14 +54,19 @@ public class StatusBarUtil {
     }
 
     /**
-     * 透明状态栏，4.4以上起作用
+     * 透明状态栏 4.4以上起作用
      *
-     * @param window window对象
+     * @param window             window对象
+     * @param statusBarBlackText 状态栏上面的文字是否显示黑色，用于浅色背景
      */
-    public static void translucentStatusBar(Window window) {
+    public static void translucentStatusBar(Window window, boolean statusBarBlackText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            int visibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            if (statusBarBlackText && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                visibility |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            }
+            window.getDecorView().setSystemUiVisibility(visibility);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(Color.TRANSPARENT);
