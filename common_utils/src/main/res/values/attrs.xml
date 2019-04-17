@@ -61,4 +61,14 @@
         <attr name="adjust_mode" format="boolean" />
         <attr name="bold" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="TopBar">
+        <attr name="leftIcon" format="reference" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="title_color" format="color" />
+        <attr name="title_text_size" format="dimension" />
+        <attr name="title_typefaceAsset" format="string" />
+        <attr name="title_img" format="reference" />
+    </declare-styleable>
 </resources>

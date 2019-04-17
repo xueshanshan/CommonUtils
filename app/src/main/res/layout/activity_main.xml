@@ -1,63 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <com.star.common_utils.widget.FlowLayout
+    <com.star.common_utils.widget.TopBar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        app:title="首页"
+        app:title_color="@android:color/white" />
 
-        <TextView
-            android:id="@+id/btn_translucent_status"
-            android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.star.common_utils.widget.FlowLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/tv_flow_bg"
-            android:text="透明状态栏"
-            android:textColor="@android:color/white" />
+            android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/btn_wheel_banner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_flow_bg"
-            android:text="轮询banner"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/btn_translucent_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="透明状态栏"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/edit_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_flow_bg"
-            android:text="图片编辑"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/btn_wheel_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="轮询banner"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/swipe_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_flow_bg"
-            android:text="滑动返回"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/edit_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="图片编辑"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/custom_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_flow_bg"
-            android:text="自定义View"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/swipe_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="滑动返回"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/line_pager_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tv_flow_bg"
-            android:text="页面导航title"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/custom_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="自定义View"
+                android:textColor="@android:color/white" />
 
-    </com.star.common_utils.widget.FlowLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/line_pager_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="页面导航title"
+                android:textColor="@android:color/white" />
+
+        </com.star.common_utils.widget.FlowLayout>
+    </ScrollView>
+</LinearLayout>
