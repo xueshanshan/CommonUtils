@@ -7,8 +7,10 @@ import android.support.annotation.Nullable;
 
 import com.star.commonutils.R;
 import com.star.commonutils.fragments.EditImageFragment;
+import com.star.commonutils.fragments.LinePagerTitleFragment;
 import com.star.commonutils.fragments.SwipeFirstFragment;
 import com.star.commonutils.fragments.CustomViewFragment;
+import com.star.commonutils.retention_defs.DispatcherType;
 
 /**
  * @author xueshanshan
@@ -18,12 +20,9 @@ import com.star.commonutils.fragments.CustomViewFragment;
  */
 public class DispatcherActivity extends BaseActivity {
     public static final String DISPATCHER = "dispatcher";
-    public static final String DISPATCH_EDIT_IMAGE = "edit_img";
-    public static final String DISPATCH_SWIPE_DELETE = "swipe_delete";
-    public static final String DISPATCH_CUSTOM_VIEW = "custom_view";
     private String mType;
 
-    public static Intent makeIntent(Context context, String dispatcher) {
+    public static Intent makeIntent(Context context, @DispatcherType String dispatcher) {
         Intent intent = new Intent(context, DispatcherActivity.class);
         intent.putExtra(DISPATCHER, dispatcher);
         return intent;
@@ -40,27 +39,38 @@ public class DispatcherActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean needStatusBarBlackText() {
+        if (DispatcherType.DISPATCH_CUSTOM_VIEW.equals(mType)) {
+            return true;
+        }
+        return super.needStatusBarBlackText();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        mType = getIntent().getStringExtra(DISPATCHER);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dispatcher);
         if (savedInstanceState != null) {
             finish();
             return;
         }
-        mType = getIntent().getStringExtra(DISPATCHER);
         dispatch();
     }
 
     private void dispatch() {
         switch (mType) {
-            case DISPATCH_EDIT_IMAGE:
+            case DispatcherType.DISPATCH_EDIT_IMAGE:
                 launch(EditImageFragment.getInstance(), R.id.fragment_container);
                 break;
-            case DISPATCH_SWIPE_DELETE:
+            case DispatcherType.DISPATCH_SWIPE_DELETE:
                 launch(SwipeFirstFragment.getInstance(), R.id.fragment_container);
                 break;
-            case DISPATCH_CUSTOM_VIEW:
+            case DispatcherType.DISPATCH_CUSTOM_VIEW:
                 launch(CustomViewFragment.getInstance(), R.id.fragment_container);
+                break;
+            case DispatcherType.DISPATCH_LINE_PAGER_TITLE:
+                launch(LinePagerTitleFragment.getInstance(), R.id.fragment_container);
                 break;
         }
     }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.star.common_utils.widget.LinePagerTitleView
+        android:id="@+id/line_pager_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        app:adjust_mode="true"
+        app:bold="true"
+        app:normal_color="@color/colorPrimary"
+        app:pager_title_line_height="2dp"
+        app:pager_title_line_width="30dp"
+        app:select_color="@color/colorAccent" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

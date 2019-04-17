@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.star.commonutils.R;
+import com.star.commonutils.retention_defs.DispatcherType;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -17,6 +18,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.edit_img).setOnClickListener(this);
         findViewById(R.id.swipe_delete).setOnClickListener(this);
         findViewById(R.id.custom_view).setOnClickListener(this);
+        findViewById(R.id.line_pager_title).setOnClickListener(this);
     }
 
 
@@ -30,13 +32,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(BannersActivity.makeIntent(this));
                 break;
             case R.id.edit_img:
-                startActivity(DispatcherActivity.makeIntent(this, DispatcherActivity.DISPATCH_EDIT_IMAGE));
+                startActivity(DispatcherActivity.makeIntent(this, DispatcherType.DISPATCH_EDIT_IMAGE));
                 break;
             case R.id.swipe_delete:
-                startActivity(DispatcherActivity.makeIntent(this, DispatcherActivity.DISPATCH_SWIPE_DELETE));
+                startActivity(DispatcherActivity.makeIntent(this, DispatcherType.DISPATCH_SWIPE_DELETE));
                 break;
             case R.id.custom_view:
-                startActivity(DispatcherActivity.makeIntent(this, DispatcherActivity.DISPATCH_CUSTOM_VIEW));
+                startActivity(DispatcherActivity.makeIntent(this, DispatcherType.DISPATCH_CUSTOM_VIEW));
+                break;
+            case R.id.line_pager_title:
+                startActivity(DispatcherActivity.makeIntent(this, DispatcherType.DISPATCH_LINE_PAGER_TITLE));
                 break;
         }
     }

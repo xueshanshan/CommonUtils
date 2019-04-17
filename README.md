@@ -19,6 +19,8 @@
 - 滑动删除 [SwipeBackLayout](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/SwipeBackLayout.java)
 - 自定义验证码布局 [VerificationCodeView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/VerificationCodeView.java)
 - 自定义菊花加载view [ChrysanthemumLoadingView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/ChrysanthemumLoadingView.java)
+- 自定义菊花加载view [ChrysanthemumLoadingView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/ChrysanthemumLoadingView.java)
+- 自定义title导航栏(基于MagicIndicator) [LinePagerTitleView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/LinePagerTitleView.java)
 
 #### 配置相关
 - gradle基本配置
