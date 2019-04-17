@@ -6,6 +6,7 @@ import com.star.common_utils.utils.AppInfoUtil;
 import com.star.common_utils.utils.AppUtil;
 import com.star.common_utils.utils.FileUtil;
 import com.star.common_utils.utils.LogUtil;
+import com.star.common_utils.utils.ScreenUtil;
 import com.star.common_utils.utils.StorageUtil;
 
 /**
@@ -21,6 +22,7 @@ public class MyApplication extends Application {
         }
         new LogUtil.Builder().debug(BuildConfig.DEBUG).globalTag("common_utils").init();
         AppInfoUtil.init(this);
+        ScreenUtil.initCustomDensityApp(this);
         FileUtil.makeDirIfNotExist(StorageUtil.ROOT_DIR_PATH);
         FileUtil.makeDirIfNotExist(StorageUtil.ROOT_DIR_PIC);
     }

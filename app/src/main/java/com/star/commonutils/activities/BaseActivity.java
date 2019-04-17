@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.star.common_utils.utils.ScreenUtil;
 import com.star.common_utils.utils.StatusBarUtil;
 import com.star.common_utils.utils.UIUtil;
 import com.star.commonutils.R;
@@ -16,6 +17,7 @@ import com.star.commonutils.fragments.BaseFragment;
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ScreenUtil.initCustomDensityActivity(this);
         super.onCreate(savedInstanceState);
         if (needSetStatusBarColor()) {
             StatusBarUtil.setStatusBarColor(getWindow(), getStatusBarColor(), isNeedAddStatusBarView(), needStatusBarBlackText());

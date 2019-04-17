@@ -40,7 +40,7 @@ public class DispatcherActivity extends BaseActivity {
 
     @Override
     protected boolean needStatusBarBlackText() {
-        if (DispatcherType.DISPATCH_CUSTOM_VIEW.equals(mType)) {
+        if (DispatcherType.DISPATCH_CUSTOM_VIEW.equals(mType) || DispatcherType.DISPATCH_LINE_PAGER_TITLE.equals(mType)) {
             return true;
         }
         return super.needStatusBarBlackText();

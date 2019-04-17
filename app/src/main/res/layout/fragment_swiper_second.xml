@@ -13,5 +13,5 @@
         android:gravity="center"
         android:text="试试左滑关闭"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="15dp" />
 </LinearLayout>

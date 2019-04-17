@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:textSize="15dp"
+        android:textSize="17dp"
         app:adjust_mode="true"
         app:bold="true"
         app:normal_color="@color/colorPrimary"
         app:pager_title_line_height="2dp"
-        app:pager_title_line_width="30dp"
+        app:pager_title_line_width="50dp"
         app:select_color="@color/colorAccent" />
 
     <android.support.v4.view.ViewPager
