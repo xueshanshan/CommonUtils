@@ -23,6 +23,7 @@
 - 自定义菊花加载view [ChrysanthemumLoadingView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/ChrysanthemumLoadingView.java)
 - 自定义title导航栏(基于MagicIndicator) [LinePagerTitleView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/LinePagerTitleView.java)
 - 自定义TopBar导航栏 [TopBar](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/TopBar.java)
+- 封装RecyclerView [BaseRecyclerView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/adapter/BaseRecyclerView.java)
 
 #### 配置相关
 - gradle基本配置

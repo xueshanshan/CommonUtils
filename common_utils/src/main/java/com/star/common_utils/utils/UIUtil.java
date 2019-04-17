@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.os.Build;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 /**
@@ -94,5 +96,20 @@ public class UIUtil {
             return new Point(availAbleSize.x, realSize.y - availAbleSize.y);
         }
         return new Point();
+    }
+
+    /**
+     * 从父View中移除
+     *
+     * @param view
+     */
+    public static void removeViewFromParent(View view) {
+        if (view == null) {
+            return;
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null) {
+            parent.removeView(view);
+        }
     }
 }

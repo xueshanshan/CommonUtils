@@ -1,6 +1,5 @@
 package com.star.commonutils.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.view.View;
 
 import com.star.common_utils.widget.LinePagerTitleView;
 import com.star.commonutils.R;
-import com.star.commonutils.adapter.CommonFragmentPagerAdapter;
+import com.star.common_utils.adapter.CommonFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class LinePagerTitleFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         LinePagerTitleView<String> linePagerTitleView = view.findViewById(R.id.line_pager_title_view);
         final List<String> titles = new ArrayList<>();
-        titles.add("自定义view集合");
+        titles.add("RecyclerView封装测试");
         titles.add("图片裁剪");
         ViewPager pager = view.findViewById(R.id.view_pager);
         CommonFragmentPagerAdapter adapter = new CommonFragmentPagerAdapter(getChildFragmentManager()) {
@@ -44,7 +43,7 @@ public class LinePagerTitleFragment extends BaseFragment {
                 return titles.get(position);
             }
         };
-        adapter.addFragment(CustomViewFragment.getInstance());
+        adapter.addFragment(BaseRecyclerViewTestFragment.getInstance());
         adapter.addFragment(EditImageFragment.getInstance());
         pager.setAdapter(adapter);
         linePagerTitleView.setViewPager(pager);

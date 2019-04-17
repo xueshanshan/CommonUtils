@@ -1,4 +1,4 @@
-package com.star.commonutils.adapter;
+package com.star.common_utils.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
