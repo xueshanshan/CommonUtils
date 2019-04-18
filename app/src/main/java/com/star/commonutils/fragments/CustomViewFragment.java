@@ -34,4 +34,9 @@ public class CustomViewFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_custom_view;
     }
+
+    @Override
+    protected boolean enableSwipeBack() {
+        return false;
+    }
 }

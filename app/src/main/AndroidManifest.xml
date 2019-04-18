@@ -23,8 +23,7 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -32,15 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.TranslucentStatusBarActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.DispatcherActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.BannersActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".activities.TranslucentStatusBarActivity" />
+        <activity android:name=".activities.DispatcherActivity" />
+        <activity android:name=".activities.BannersActivity" />
     </application>
 
 </manifest>

@@ -6,10 +6,29 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+
+        <!--添加这两个属性是为了能够实现Activity右滑删除的时候能看到上个Activity的内容 代价就是需要自己给每个页面指定一个背景-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <!--打开新的Activity的入场动画-->
+        <item name="android:activityOpenEnterAnimation">@anim/common_utils_activity_open_enter
+        </item>
+        <!--打开新的Activity时销毁之前的Activity的动画-->
+        <item name="android:activityOpenExitAnimation">@anim/common_utils_activity_open_exit</item>
+
+        <!--关闭当前Activity回到上一个Activity展示的动画-->
+        <item name="android:activityCloseEnterAnimation">@anim/common_utils_activity_close_enter
+        </item>
+        <!--关闭当前Activity展示的动画-->
+        <item name="android:activityCloseExitAnimation">@anim/common_utils_activity_close_exit
+        </item>
     </style>
 
     <style name="AppTheme.AppWhiteTheme">
         <item name="colorPrimaryDark">@color/status_bar_gray</item>
     </style>
-
 </resources>

@@ -30,9 +30,11 @@ public abstract class BaseFragment extends Fragment implements SwipeBackLayout.D
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
-        View finalView = installSwipe(view);
-        finalView.setClickable(true);
-        return finalView;
+        if (enableSwipeBack()) {
+            view = installSwipe(view);
+            view.setClickable(true);
+        }
+        return view;
     }
 
     protected abstract int getLayoutId();
@@ -63,9 +65,9 @@ public abstract class BaseFragment extends Fragment implements SwipeBackLayout.D
             return;
         }
         getActivity().getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.sdk_debug_slide_in_right_, 0, 0, R.anim.sdk_debug_slide_out_right_)
+                .setCustomAnimations(R.anim.common_utils_activity_open_enter, 0, 0, R.anim.common_utils_activity_close_exit)
                 .add(container, fragment)
-                .addToBackStack(null)
+                .addToBackStack(null)  //这个虽然传的参数是null 但还是表示要添加到任务Fragment回退栈中，不调用该方法就不会添加到回退栈中
                 .commit();
     }
 

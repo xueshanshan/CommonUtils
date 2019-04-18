@@ -49,4 +49,9 @@ public class LinePagerTitleFragment extends BaseFragment {
         linePagerTitleView.setViewPager(pager);
         linePagerTitleView.setObjectList(titles);
     }
+
+    @Override
+    protected boolean enableSwipeBack() {
+        return false;
+    }
 }

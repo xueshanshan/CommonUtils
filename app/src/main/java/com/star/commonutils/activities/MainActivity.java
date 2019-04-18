@@ -45,4 +45,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    protected boolean enableSwipeBack() {
+        return false;
+    }
 }

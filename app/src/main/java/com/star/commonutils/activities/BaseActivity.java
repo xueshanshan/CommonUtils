@@ -1,12 +1,19 @@
 package com.star.commonutils.activities;
 
+import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.star.common_utils.utils.ScreenUtil;
 import com.star.common_utils.utils.StatusBarUtil;
 import com.star.common_utils.utils.UIUtil;
+import com.star.common_utils.widget.SwipeBackLayout;
 import com.star.commonutils.R;
 import com.star.commonutils.fragments.BaseFragment;
 
@@ -14,16 +21,53 @@ import com.star.commonutils.fragments.BaseFragment;
  * @author xueshanshan
  * @date 2018/12/10
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements SwipeBackLayout.DismissCallback {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ScreenUtil.initCustomDensityActivity(this);
         super.onCreate(savedInstanceState);
+
+        //为了解决8.0透明主题Activity 设置方向崩溃问题
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         if (needSetStatusBarColor()) {
             StatusBarUtil.setStatusBarColor(getWindow(), getStatusBarColor(), isNeedAddStatusBarView(), needStatusBarBlackText());
         } else if (needTranslucentStatusBar()) {
             StatusBarUtil.translucentStatusBar(getWindow(), needStatusBarBlackText());
         }
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        if (enableSwipeBack()) {
+            View view = LayoutInflater.from(this).inflate(layoutResID, null);
+            super.setContentView(installSwipe(view));
+        } else {
+            super.setContentView(layoutResID);
+        }
+    }
+
+    private View installSwipe(View content) {
+        SwipeBackLayout swipeBackLayout = new SwipeBackLayout(this);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        swipeBackLayout.setLayoutParams(params);
+        swipeBackLayout.setBackgroundColor(Color.TRANSPARENT);
+        swipeBackLayout.attach(this, content);
+        swipeBackLayout.enableGesture(enableSwipeBack());
+        return swipeBackLayout;
+    }
+
+
+    protected boolean enableSwipeBack() {
+        return true;
+    }
+
+    @Override
+    public void onDismiss() {
+        finish();
     }
 
     /**

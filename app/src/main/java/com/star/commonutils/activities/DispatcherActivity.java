@@ -47,6 +47,14 @@ public class DispatcherActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean enableSwipeBack() {
+        if (mType.equals(DispatcherType.DISPATCH_SWIPE_DELETE)) {
+            return false;
+        }
+        return super.enableSwipeBack();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mType = getIntent().getStringExtra(DISPATCHER);
         super.onCreate(savedInstanceState);
