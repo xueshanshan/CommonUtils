@@ -8,6 +8,7 @@
         android:id="@+id/item_tv"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@android:color/holo_purple"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:textColor="#333333"

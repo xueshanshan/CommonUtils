@@ -1,7 +1,10 @@
-package com.star.common_utils.adapter;
+package com.star.common_utils.widget.recyclerview;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,7 @@ import com.star.common_utils.utils.UIUtil;
  * @author xueshanshan
  * @date 2019/4/18
  */
-class BaseRecyclerViewAdapter<Model> extends RecyclerView.Adapter<BaseRecyclerViewHolder> implements View.OnClickListener {
+public class BaseRecyclerViewAdapter<Model> extends RecyclerView.Adapter<BaseRecyclerViewHolder> implements View.OnClickListener {
 
     // item 的三种类型
     public static final int ITEM_TYPE_NORMAL = 1; // 正常的item类型
@@ -64,6 +67,7 @@ class BaseRecyclerViewAdapter<Model> extends RecyclerView.Adapter<BaseRecyclerVi
         if (mOnBaseRecyclerViewListener != null) {
             View itemView = LayoutInflater.from(mContext).inflate(mOnBaseRecyclerViewListener.getItemLayoutId(), parent, false);
             holder = new BaseRecyclerViewHolder(itemView);
+//            mOnBaseRecyclerViewListener.onViewHolderCreated(holder);
 
             if (mNeedItemClick) {
                 holder.itemView.setOnClickListener(this);
@@ -83,7 +87,7 @@ class BaseRecyclerViewAdapter<Model> extends RecyclerView.Adapter<BaseRecyclerVi
             Model item = mBaseRecyclerView.getDatas().get(position);
             holder.itemView.setTag(R.id.recycler_item_tag, item);
             if (mOnBaseRecyclerViewListener != null) {
-                mOnBaseRecyclerViewListener.bindView(holder, item, position);
+                mOnBaseRecyclerViewListener.onBindView(holder, item, position);
             }
         }
     }
@@ -121,6 +125,40 @@ class BaseRecyclerViewAdapter<Model> extends RecyclerView.Adapter<BaseRecyclerVi
     public void onClick(View v) {
         if (mOnBaseRecyclerViewListener != null) {
             mOnBaseRecyclerViewListener.onItemClick(v, ((Model) v.getTag(R.id.recycler_item_tag)));
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull BaseRecyclerViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        int position = holder.getLayoutPosition();
+        int itemViewType = getItemViewType(position);
+        if (holder.itemView.getLayoutParams() instanceof StaggeredGridLayoutManager.LayoutParams &&
+                (itemViewType == ITEM_TYPE_HEADER || itemViewType == ITEM_TYPE_FOOTER)) {
+            StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) holder
+                    .itemView.getLayoutParams();
+            params.setFullSpan(true);
+        }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    //占用的单元格数 header 和 Footer占用多个单元格
+                    int itemViewType = getItemViewType(position);
+                    if (itemViewType == ITEM_TYPE_NORMAL) {
+                        return 1;
+                    } else {
+                        return gridManager.getSpanCount();
+                    }
+                }
+            });
         }
     }
 }

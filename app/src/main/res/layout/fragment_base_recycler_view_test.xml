@@ -13,7 +13,7 @@
         android:text="添加数据"
         android:textColor="@android:color/white" />
 
-    <com.star.common_utils.adapter.BaseRecyclerView
+    <com.star.common_utils.widget.recyclerview.BaseRecyclerView
         android:id="@+id/base_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

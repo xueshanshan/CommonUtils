@@ -1,4 +1,4 @@
-package com.star.common_utils.adapter;
+package com.star.common_utils.widget.recyclerview;
 
 import android.view.View;
 
@@ -9,7 +9,9 @@ import android.view.View;
 public interface OnBaseRecyclerViewListener<Model> {
     int getItemLayoutId();
 
-    void bindView(BaseRecyclerViewHolder holder, Model item, int position);
+//    void onViewHolderCreated(BaseRecyclerViewHolder holder);
+
+    void onBindView(BaseRecyclerViewHolder holder, Model item, int position);
 
     void onItemClick(View view, Model item);
 }

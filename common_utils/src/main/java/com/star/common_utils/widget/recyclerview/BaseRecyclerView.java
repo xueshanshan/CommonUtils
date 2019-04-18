@@ -1,4 +1,4 @@
-package com.star.common_utils.adapter;
+package com.star.common_utils.widget.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +19,7 @@ public class BaseRecyclerView<Model> extends RecyclerView {
     private BaseRecyclerViewAdapter<Model> mBaseRecyclerAdapter;
     private List<Model> mDatas = new ArrayList<>();
     private boolean mHasHeader;
+    private boolean mHasFooter;
 
     public BaseRecyclerView(Context context) {
         this(context, null);
@@ -57,6 +58,29 @@ public class BaseRecyclerView<Model> extends RecyclerView {
         mBaseRecyclerAdapter.notifyDataSetChanged();
     }
 
+    public GridLayoutManager getGridLayoutManager() {
+        return mGridLayoutManager;
+    }
+
+    public BaseRecyclerViewAdapter<Model> getBaseRecyclerAdapter() {
+        return mBaseRecyclerAdapter;
+    }
+
+    public boolean isHasHeader() {
+        return mHasHeader;
+    }
+
+    public boolean isHasFooter() {
+        return mHasFooter;
+    }
+
+    public int getRealDataPosition(int position) {
+        if (mHasHeader) {
+            return position - 1;
+        }
+        return position;
+    }
+
     /**
      * 设置数据源
      *
@@ -90,6 +114,20 @@ public class BaseRecyclerView<Model> extends RecyclerView {
     }
 
     /**
+     * 根据位置添加数据
+     *
+     * @param pos  pos为数据源实际的位置
+     * @param data
+     */
+    public void addData(int pos, Model data) {
+        int size = getDatas().size();
+        if (data != null && pos >= 0 && pos <= size) {
+            getDatas().add(pos, data);
+            mBaseRecyclerAdapter.notifyItemInserted(mHasHeader ? pos + 1 : pos);
+        }
+    }
+
+    /**
      * 添加多条数据
      *
      * @param datas
@@ -105,24 +143,26 @@ public class BaseRecyclerView<Model> extends RecyclerView {
      *
      * @param data
      */
-    public void remoteData(Model data) {
+    public Model removeData(Model data) {
         int index = -1;
         if (data != null && (index = getDatas().indexOf(data)) != -1) {
             mBaseRecyclerAdapter.notifyItemRemoved(mHasHeader ? index + 1 : index);
-            getDatas().remove(index);
+            return getDatas().remove(index);
         }
+        return null;
     }
 
     /**
      * 根据index移除单条数据
      *
-     * @param index
+     * @param index index为数据源实际的index
      */
-    public void remoteData(int index) {
+    public Model removeData(int index) {
         if (index >= 0 && index < getDatas().size()) {
             mBaseRecyclerAdapter.notifyItemRemoved(mHasHeader ? index + 1 : index);
-            getDatas().remove(index);
+            return getDatas().remove(index);
         }
+        return null;
     }
 
     /**
@@ -141,6 +181,7 @@ public class BaseRecyclerView<Model> extends RecyclerView {
      * @param footer
      */
     public void setFooterView(View footer) {
+        mHasFooter = true;
         mBaseRecyclerAdapter.setFooterView(footer);
     }
 }

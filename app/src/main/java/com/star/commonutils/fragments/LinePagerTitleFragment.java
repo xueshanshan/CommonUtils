@@ -33,8 +33,8 @@ public class LinePagerTitleFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         LinePagerTitleView<String> linePagerTitleView = view.findViewById(R.id.line_pager_title_view);
         final List<String> titles = new ArrayList<>();
-        titles.add("RecyclerView封装测试");
-        titles.add("图片裁剪");
+        titles.add("列表");
+        titles.add("网格");
         ViewPager pager = view.findViewById(R.id.view_pager);
         CommonFragmentPagerAdapter adapter = new CommonFragmentPagerAdapter(getChildFragmentManager()) {
             @Nullable
@@ -43,8 +43,8 @@ public class LinePagerTitleFragment extends BaseFragment {
                 return titles.get(position);
             }
         };
-        adapter.addFragment(BaseRecyclerViewTestFragment.getInstance());
-        adapter.addFragment(EditImageFragment.getInstance());
+        adapter.addFragment(BaseRecyclerViewTestFragment.getInstance(false));
+        adapter.addFragment(BaseRecyclerViewTestFragment.getInstance(true));
         pager.setAdapter(adapter);
         linePagerTitleView.setViewPager(pager);
         linePagerTitleView.setObjectList(titles);

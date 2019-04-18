@@ -1,4 +1,4 @@
-package com.star.common_utils.adapter;
+package com.star.common_utils.widget.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,10 +14,16 @@ import java.util.Map;
 public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private Map<Integer, View> mViewMap;
+    private OnBaseRecyclerViewListener mOnBaseRecyclerViewListener;
 
     BaseRecyclerViewHolder(View itemView) {
+        this(itemView, null);
+    }
+
+    public BaseRecyclerViewHolder(View itemView, OnBaseRecyclerViewListener onBaseRecyclerViewListener) {
         super(itemView);
         mViewMap = new HashMap<>();
+        mOnBaseRecyclerViewListener = onBaseRecyclerViewListener;
     }
 
     /**
