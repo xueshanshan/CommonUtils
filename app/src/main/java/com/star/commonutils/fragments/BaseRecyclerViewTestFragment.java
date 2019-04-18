@@ -80,8 +80,7 @@ public class BaseRecyclerViewTestFragment extends BaseFragment implements OnBase
 
     @Override
     public void bindView(BaseRecyclerViewHolder holder, String item, int position) {
-        TextView tv = (TextView) holder.getView(R.id.item_tv);
-        tv.setText(item);
+        holder.getTextView(R.id.item_tv).setText(item);
     }
 
     @Override
