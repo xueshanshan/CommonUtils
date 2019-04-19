@@ -71,4 +71,15 @@
         <attr name="title_typefaceAsset" format="string" />
         <attr name="title_img" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="IndicatorView">
+        <attr name="count" format="integer" />
+        <attr name="radius" format="dimension" />
+        <attr name="interval" format="dimension" />
+        <attr name="dotColor" format="color" />
+        <attr name="transitColor" format="color" />
+        <attr name="transitDuration" format="integer" />
+        <attr name="stretchTime" format="fraction" />
+        <attr name="contractTime" format="fraction" />
+    </declare-styleable>
 </resources>

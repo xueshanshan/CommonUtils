@@ -1,10 +1,18 @@
 package com.star.commonutils.activities;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 
+import com.star.common_utils.utils.AppUtil;
+import com.star.common_utils.utils.LogUtil;
 import com.star.commonutils.R;
 import com.star.commonutils.retention_defs.DispatcherType;
+import com.star.xpermission.OnPermissionCallback;
+import com.star.xpermission.PermissionSparseArray;
+import com.star.xpermission.XPermission;
+
+import java.io.File;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -19,6 +27,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.swipe_delete).setOnClickListener(this);
         findViewById(R.id.custom_view).setOnClickListener(this);
         findViewById(R.id.line_pager_title).setOnClickListener(this);
+        findViewById(R.id.app_install).setOnClickListener(this);
     }
 
 
@@ -42,6 +51,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.line_pager_title:
                 startActivity(DispatcherActivity.makeIntent(this, DispatcherType.DISPATCH_LINE_PAGER_TITLE));
+                break;
+            case R.id.app_install:
+                XPermission.permissionRequest(this, PermissionSparseArray.PERMISSION_STORAGE, new OnPermissionCallback() {
+                    @Override
+                    public void onPermissionGranted(int reqCode) {
+                        AppUtil.installApk(MainActivity.this, new File(Environment.getExternalStorageDirectory(), "test.apk"), "com.star.commonutils.fileprovider");
+                    }
+
+                    @Override
+                    public void onPermissionDenied(String deniedPermission, int reqCode) {
+                        XPermission.showTipDialog(MainActivity.this, "请授予权限", "该权限读取sd卡内容");
+                    }
+
+                    @Override
+                    public void shouldShowRequestPermissionTip(String requestPermissionRationale, int reqCode) {
+                        XPermission.showTipDialog(MainActivity.this, "请授予权限", "该权限读取sd卡内容");
+                    }
+                });
                 break;
         }
     }
