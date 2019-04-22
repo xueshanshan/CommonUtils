@@ -12,6 +12,7 @@
 - 矩阵计算工具 [MatrixUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/MatrixUtil.java)
 - 图片裁剪或保存工具 [BitmapUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/BitmapUtil.java)
 - 屏幕适配工具 [StatusBarUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/StatusBarUtil.java)
+- 屏幕适配工具 [LifecycleUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/LifecycleUtil.java)
 
 #### UI相关
 - 流式布局 [FlowLayout](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/FlowLayout.java)
