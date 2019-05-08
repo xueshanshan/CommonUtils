@@ -3,6 +3,7 @@ package com.star.common_utils.utils;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -176,6 +177,32 @@ public class AppUtil {
             ResolveInfo resolveInfo = (ResolveInfo) resInfoIterator.next();
             String packageName = resolveInfo.activityInfo.packageName;
             context.grantUriPermission(packageName, apkUrl, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+    }
+
+    /**
+     * 检查是否有悬浮窗权限
+     *
+     * @return
+     */
+    public static boolean checkDrawOverlaysPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(AppInfoUtil.sContext);
+        }
+        return true;
+    }
+
+    /**
+     * 请求悬浮窗权限
+     */
+    public static void requestOverlayPermission() {
+        try {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            intent.setData(Uri.parse("package:" + AppInfoUtil.sContext.getPackageName()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            AppInfoUtil.sContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
