@@ -87,6 +87,24 @@
                 android:textColor="@android:color/white"
                 android:textSize="13dp" />
 
+            <TextView
+                android:id="@+id/dialogFragmentFullScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="全屏dialogFragment"
+                android:textColor="@android:color/white"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/dialogFragmentUnFullScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="非全屏dialogFragment"
+                android:textColor="@android:color/white"
+                android:textSize="13dp" />
+
         </com.star.common_utils.widget.FlowLayout>
     </ScrollView>
 </LinearLayout>

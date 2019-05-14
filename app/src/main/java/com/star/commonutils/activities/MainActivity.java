@@ -6,7 +6,10 @@ import android.view.View;
 
 import com.star.common_utils.utils.AppUtil;
 import com.star.common_utils.utils.LogUtil;
+import com.star.common_utils.widget.dialogfragment.DialogFragmentDismissListener;
 import com.star.commonutils.R;
+import com.star.commonutils.fragments.MyDialogFragmentFullScreen;
+import com.star.commonutils.fragments.MyDialogFragmentUnFullScreen;
 import com.star.commonutils.retention_defs.DispatcherType;
 import com.star.xpermission.OnPermissionCallback;
 import com.star.xpermission.PermissionSparseArray;
@@ -15,7 +18,7 @@ import com.star.xpermission.XPermission;
 import java.io.File;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, DialogFragmentDismissListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.custom_view).setOnClickListener(this);
         findViewById(R.id.line_pager_title).setOnClickListener(this);
         findViewById(R.id.app_install).setOnClickListener(this);
+        findViewById(R.id.dialogFragmentFullScreen).setOnClickListener(this);
+        findViewById(R.id.dialogFragmentUnFullScreen).setOnClickListener(this);
     }
 
 
@@ -70,11 +75,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     }
                 });
                 break;
+            case R.id.dialogFragmentFullScreen:
+                MyDialogFragmentFullScreen dialogFragmentFullScreen = new MyDialogFragmentFullScreen();
+                dialogFragmentFullScreen.show(getSupportFragmentManager());
+                dialogFragmentFullScreen.setDialogFragmentDismissListener(this);
+                break;
+            case R.id.dialogFragmentUnFullScreen:
+                MyDialogFragmentUnFullScreen dialogFragmentUnFullScreen = new MyDialogFragmentUnFullScreen();
+                dialogFragmentUnFullScreen.show(getSupportFragmentManager());
+                dialogFragmentUnFullScreen.setDialogFragmentDismissListener(this);
+                break;
         }
     }
 
     @Override
     protected boolean enableSwipeBack() {
         return false;
+    }
+
+    @Override
+    public void onDialogFragmentDismiss() {
+        LogUtil.d("onDialogFragmentDismiss");
     }
 }

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <external-path name="commonutil" path="."/>
+    <external-path
+        name="commonutil-external-path"
+        path="." />
+    <external-files-path
+        name="commonutil-external-files-path"
+        path="." />
+    <external-cache-path
+        name="commonutil-external-cache-path"
+        path="." />
+    <files-path
+        name="commonutil-files-path"
+        path="." />
+    <cache-path
+        name="commonutil-cache-path"
+        path="." />
 </paths>
