@@ -1,5 +1,7 @@
 package com.star.common_utils.widget;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 import com.star.common_utils.R;
+import com.star.common_utils.listener.SimpleAnimatorListener;
 import com.star.common_utils.utils.AppUtil;
 import com.star.common_utils.utils.image.ImageLoader;
 import com.star.common_utils.utils.image.SimpleTarget;
@@ -52,7 +55,17 @@ public class LinePagerTitleView<T> extends LinearLayout {
     private int navigatorPadding;
     private boolean bold;
 
-    private ViewPager viewPager;
+    private List<T> objectList;
+    private ViewPager mViewPager;
+    private TopPagerTitleListener<T> mTopPagerTitleListener;
+    private TopPagerListenerIcon<T> mTopPagerIconListener;
+    private TopPagerClickListener<T> mTopPagerClickListener;
+
+    private int mLastIndex;
+    private int mToIndex;
+    private int mTotalDiff;
+    private int mCurDiff;
+    private ValueAnimator mAnimator;
 
     public LinePagerTitleView(Context context) {
         this(context, null);
@@ -132,11 +145,11 @@ public class LinePagerTitleView<T> extends LinearLayout {
 //                simplePagerTitleView.setTypeface();
                 if (mTopPagerTitleListener != null) {
                     simplePagerTitleView.setText(mTopPagerTitleListener.getTopPagerTitle(objectList.get(index)));
-                } else if (viewPager != null && viewPager.getAdapter() != null) {
-                    simplePagerTitleView.setText(viewPager.getAdapter().getPageTitle(index));
+                } else {
+                    simplePagerTitleView.setText(objectList.get(index).toString());
                 }
-                if (topPagerListenerIcon != null) {
-                    String topPagerIconUrl = topPagerListenerIcon.getTopPagerIconUrl(objectList.get(index));
+                if (mTopPagerIconListener != null) {
+                    String topPagerIconUrl = mTopPagerIconListener.getTopPagerIconUrl(objectList.get(index));
                     if (!TextUtils.isEmpty(topPagerIconUrl)) {
                         ImageLoader.getDefaultImageLoader().load(topPagerIconUrl).into(new SimpleTarget() {
                             @Override
@@ -152,8 +165,13 @@ public class LinePagerTitleView<T> extends LinearLayout {
                 simplePagerTitleView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (viewPager != null) {
-                            viewPager.setCurrentItem(index);
+                        if (mViewPager != null) {
+                            mViewPager.setCurrentItem(index);
+                        } else {
+                            onTabClickAnimator(index);
+                        }
+                        if (mTopPagerClickListener != null) {
+                            mTopPagerClickListener.onTabClick(index, objectList.get(index));
                         }
                     }
                 });
@@ -175,62 +193,23 @@ public class LinePagerTitleView<T> extends LinearLayout {
         magicIndicator.setNavigator(navigator);
     }
 
-    public void setAdjustMode(boolean adjustMode) {
-        this.adjustMode = adjustMode;
-        navigator.setAdjustMode(adjustMode);
-        navigator.onAttachToMagicIndicator();
-    }
-
-    private List<T> objectList;
 
     public void setObjectList(List<T> objectList) {
         this.objectList = objectList;
         navigator.notifyDataSetChanged();
     }
 
-    public void setObjectList(List<T> objectList, int normalColor, int selectColor, int indicatorColor) {
-        this.objectList = objectList;
-        this.normalColor = normalColor;
-        this.selectColor = selectColor;
-        this.indicatorColor = indicatorColor;
-        notifyDataSetChanged();
+    public void onPageSelected(int index) {
+        if (mViewPager != null) {
+            mViewPager.setCurrentItem(index);
+        } else {
+            mLastIndex = index;
+            magicIndicator.onPageSelected(index);
+        }
     }
-
-    public void setNormalColor(int normalColor) {
-        this.normalColor = normalColor;
-    }
-
-    public void setSelectColor(int selectColor) {
-        this.selectColor = selectColor;
-    }
-
-    public void setIndicatorColor(int indicatorColor) {
-        this.indicatorColor = indicatorColor;
-    }
-
-    public void setLineHeight(int lineHeight) {
-        this.lineHeight = lineHeight;
-    }
-
-    public void setLineWidth(int lineWidth) {
-        this.lineWidth = lineWidth;
-    }
-
-    public void setLineMode(int lineMode) {
-        this.lineMode = lineMode;
-    }
-
-    public void setTextSize(int textSize) {
-        this.textSize = textSize;
-    }
-
-    public void notifyDataSetChanged() {
-        navigator.notifyDataSetChanged();
-    }
-
 
     public void setViewPager(ViewPager viewPager) {
-        this.viewPager = viewPager;
+        this.mViewPager = viewPager;
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -249,18 +228,74 @@ public class LinePagerTitleView<T> extends LinearLayout {
         });
     }
 
-    private TopPagerTitleListener<T> mTopPagerTitleListener;
+    public void setAdjustMode(boolean adjustMode) {
+        this.adjustMode = adjustMode;
+        navigator.setAdjustMode(adjustMode);
+        navigator.onAttachToMagicIndicator();
+    }
+
 
     public void setTopPagerTitleListener(TopPagerTitleListener<T> topPagerTitleListener) {
         this.mTopPagerTitleListener = topPagerTitleListener;
     }
 
-    public CommonNavigator getNavigator() {
-        return navigator;
+    public void setTopPagerIconListener(TopPagerListenerIcon<T> topPagerIconListener) {
+        this.mTopPagerIconListener = topPagerIconListener;
     }
 
-    public MagicIndicator getMagicIndicator() {
-        return magicIndicator;
+    public void setTopPagerClickListener(TopPagerClickListener<T> topPagerClickListener) {
+        mTopPagerClickListener = topPagerClickListener;
+    }
+
+    /**
+     * 如果该导航没跟viewPager绑定，那么点击的时候就需要自己做动画
+     *
+     * @param toIndex 被选中的index
+     */
+    public void onTabClickAnimator(int toIndex) {
+        int diff = Math.abs(toIndex - mLastIndex);
+        if (diff > 0) {
+            mTotalDiff = diff;
+            mToIndex = toIndex;
+            mCurDiff = 1;
+            initAnimator();
+            mAnimator.start();
+        }
+    }
+
+    public void initAnimator() {
+        if (mAnimator == null) {
+            mAnimator = ValueAnimator.ofFloat(0.0F, 1.0F);
+            mAnimator.setDuration(200);
+            mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    Float animatedValue = (Float) animation.getAnimatedValue();
+                    float i = 1f / mTotalDiff;
+                    if (animatedValue > mCurDiff * i) {
+                        mCurDiff++;
+                        if (mLastIndex < mToIndex) {
+                            mLastIndex++;
+                        } else {
+                            mLastIndex--;
+                        }
+                    }
+                    animatedValue -= (mCurDiff - 1) * i;
+
+                    if (mLastIndex < mToIndex) {
+                        magicIndicator.onPageScrolled(mLastIndex, animatedValue * mTotalDiff, 0);
+                    } else if (mLastIndex > mToIndex) {
+                        magicIndicator.onPageScrolled(mLastIndex - 1, 1 - animatedValue * mTotalDiff, 0);
+                    }
+                }
+            });
+            mAnimator.addListener(new SimpleAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animation, boolean isReverse) {
+                    magicIndicator.onPageSelected(mToIndex);
+                    mLastIndex = mToIndex;
+                }
+            });
+        }
     }
 
     public interface TopPagerTitleListener<T> {
@@ -271,9 +306,7 @@ public class LinePagerTitleView<T> extends LinearLayout {
         String getTopPagerIconUrl(T t);
     }
 
-    private TopPagerListenerIcon<T> topPagerListenerIcon;
-
-    public void setTopPagerListenerIcon(TopPagerListenerIcon<T> topPagerListenerIcon) {
-        this.topPagerListenerIcon = topPagerListenerIcon;
+    public interface TopPagerClickListener<T> {
+        void onTabClick(int index, T t);
     }
 }

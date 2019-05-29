@@ -82,4 +82,20 @@
         <attr name="stretchTime" format="fraction" />
         <attr name="contractTime" format="fraction" />
     </declare-styleable>
+
+    <attr name="zoom_scale" format="float" />
+    <attr name="duration_down" format="integer" />
+    <attr name="duration_up" format="integer" />
+
+    <declare-styleable name="AnimZoomRelativeLayout">
+        <attr name="zoom_scale" />
+        <attr name="duration_down" />
+        <attr name="duration_up" />
+    </declare-styleable>
+
+    <declare-styleable name="AnimZoomLinearLayout">
+        <attr name="zoom_scale" />
+        <attr name="duration_down" />
+        <attr name="duration_up" />
+    </declare-styleable>
 </resources>
