@@ -54,15 +54,6 @@ public class AnimZoomRelativeLayout extends RelativeLayout implements ValueAnima
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        //在非down的时候进行拦截，以免子view也需要有事件处理
-        if (event.getAction() != MotionEvent.ACTION_DOWN) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         mUp = false;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
