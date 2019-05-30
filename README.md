@@ -12,7 +12,7 @@
 - 矩阵计算工具 [MatrixUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/MatrixUtil.java)
 - 图片裁剪或保存工具 [BitmapUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/BitmapUtil.java)
 - 屏幕适配工具 [StatusBarUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/StatusBarUtil.java)
-- 屏幕适配工具 [LifecycleUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/LifecycleUtil.java)
+- 生命周期监听工具 [LifecycleUtil](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/utils/LifecycleUtil.java)
 
 #### UI相关
 - 流式布局 [FlowLayout](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/FlowLayout.java)
@@ -20,7 +20,6 @@
 - 图片裁剪 [EditImageView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/EditImageView.java)
 - 滑动删除 [SwipeBackLayout](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/SwipeBackLayout.java)
 - 自定义验证码布局 [VerificationCodeView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/VerificationCodeView.java)
-- 自定义菊花加载view [ChrysanthemumLoadingView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/ChrysanthemumLoadingView.java)
 - 自定义菊花加载view [ChrysanthemumLoadingView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/ChrysanthemumLoadingView.java)
 - 自定义title导航栏(基于MagicIndicator) [LinePagerTitleView](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/LinePagerTitleView.java)
 - 自定义TopBar导航栏 [TopBar](https://github.com/xueshanshan/CommonUtils/blob/master/common_utils/src/main/java/com/star/common_utils/widget/TopBar.java)
