@@ -18,6 +18,7 @@ public class AnimZoomRelativeLayout extends RelativeLayout implements ValueAnima
     private ValueAnimator mAnimatorUp;
     private AnimatorZoomListener mOnAnimatorZoomListener;
     private boolean mUp;
+    private boolean mCancel;
 
     public AnimZoomRelativeLayout(Context context) {
         this(context, null);
@@ -56,6 +57,7 @@ public class AnimZoomRelativeLayout extends RelativeLayout implements ValueAnima
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mUp = false;
+        mCancel = false;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             mAnimatorDown.start();
             //返回true 如果子view没有处理事件 则该view进行处理 为了能够接收到后续事件
@@ -66,7 +68,10 @@ public class AnimZoomRelativeLayout extends RelativeLayout implements ValueAnima
                 mAnimatorUp.start();
             }
         } else if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-            mAnimatorUp.start();
+            mCancel = true;
+            if (!mAnimatorDown.isRunning()) {
+                mAnimatorUp.start();
+            }
         }
         return super.onTouchEvent(event);
     }
@@ -85,7 +90,7 @@ public class AnimZoomRelativeLayout extends RelativeLayout implements ValueAnima
 
     @Override
     public void onAnimationEnd(Animator animation) {
-        if (animation == mAnimatorDown && mUp) {
+        if (animation == mAnimatorDown && (mUp || mCancel)) {
             mAnimatorUp.start();
         }
         if (mOnAnimatorZoomListener != null && animation == mAnimatorUp && mUp) {
