@@ -105,6 +105,15 @@
                 android:textColor="@android:color/white"
                 android:textSize="13dp" />
 
+            <TextView
+                android:id="@+id/bottom_pop_dialog_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_flow_bg"
+                android:text="底部弹出DialogFragment"
+                android:textColor="@android:color/white"
+                android:textSize="13dp" />
+
         </com.star.common_utils.widget.FlowLayout>
     </ScrollView>
 </LinearLayout>

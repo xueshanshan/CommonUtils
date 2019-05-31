@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.star.common_utils.utils.AppUtil;
 import com.star.common_utils.utils.LogUtil;
+import com.star.common_utils.widget.dialogfragment.BottomPopListDialogFragment;
 import com.star.common_utils.widget.dialogfragment.DialogFragmentDismissListener;
 import com.star.commonutils.R;
 import com.star.commonutils.fragments.MyDialogFragmentFullScreen;
@@ -16,6 +17,8 @@ import com.star.xpermission.PermissionSparseArray;
 import com.star.xpermission.XPermission;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DialogFragmentDismissListener {
@@ -33,6 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.app_install).setOnClickListener(this);
         findViewById(R.id.dialogFragmentFullScreen).setOnClickListener(this);
         findViewById(R.id.dialogFragmentUnFullScreen).setOnClickListener(this);
+        findViewById(R.id.bottom_pop_dialog_fragment).setOnClickListener(this);
     }
 
 
@@ -84,6 +88,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 MyDialogFragmentUnFullScreen dialogFragmentUnFullScreen = new MyDialogFragmentUnFullScreen();
                 dialogFragmentUnFullScreen.show(getSupportFragmentManager());
                 dialogFragmentUnFullScreen.setDialogFragmentDismissListener(this);
+                break;
+            case R.id.bottom_pop_dialog_fragment:
+                BottomPopListDialogFragment bottomPopListDialogFragment = new BottomPopListDialogFragment();
+                List<BottomPopListDialogFragment.BottomPopItem> items = new ArrayList<>();
+                items.add(new BottomPopListDialogFragment.BottomPopItem("time", "服务时间：周一至周日 9:00-18:00", "#999999", AppUtil.dp2px(this, 11), AppUtil.dp2px(this, 38)));
+                items.add(new BottomPopListDialogFragment.BottomPopItem("call", "拨打：0000-000-000"));
+                items.add(new BottomPopListDialogFragment.BottomPopItem("chat", "在线客服"));
+                bottomPopListDialogFragment.setBottomPopItems(items);
+                bottomPopListDialogFragment.setPopListDialogItemClickListener(new BottomPopListDialogFragment.BottomPopListDialogItemClickListener() {
+                    @Override
+                    public void onItemClick(BottomPopListDialogFragment.BottomPopItem bottomPopItem) {
+                        switch (bottomPopItem.id) {
+                            case "call":
+                                break;
+                            case "chat":
+                                break;
+                        }
+                    }
+                });
+                bottomPopListDialogFragment.show(getSupportFragmentManager());
                 break;
         }
     }

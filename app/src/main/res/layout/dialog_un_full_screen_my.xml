@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dialog_content"
-    android:layout_width="280dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
     android:orientation="vertical">
 
 
@@ -22,14 +21,19 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="这是content数据库副书记开放接口是福建省防静电雷锋精神开放接口的房价是否福建省看风景收款方方法"
+        android:paddingBottom="15dp"
+        android:text="这是content数据  \n空白处点击会自动消失"
         android:textColor="#666666"
         android:textSize="15sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#ececec" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="45dp"
         android:orientation="horizontal">
 
         <TextView
@@ -40,6 +44,11 @@
             android:text="取消"
             android:textColor="#333333"
             android:textSize="16sp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#ececec" />
 
         <TextView
             android:layout_width="0dp"
