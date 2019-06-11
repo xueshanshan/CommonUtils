@@ -7,16 +7,13 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.star.common_utils.BuildConfig;
 import com.star.common_utils.utils.AppInfoUtil;
-import com.star.common_utils.utils.LogUtil;
 
 import okhttp3.OkHttpClient;
 
@@ -37,7 +34,7 @@ public class ImageLoader {
                 .indicatorsEnabled(BuildConfig.DEBUG) //绿色(内存缓存) 蓝色(磁盘缓存) 红色(网络)
                 .memoryCache(new LruCache(context))
                 .downloader(new OkHttp3Downloader(okHttpClient))
-                .defaultBitmapConfig(Bitmap.Config.RGB_565)
+                .defaultBitmapConfig(Bitmap.Config.ARGB_8888)
                 .build();
         sPicasso = picasso;
         Picasso.setSingletonInstance(picasso);
@@ -48,23 +45,27 @@ public class ImageLoader {
     }
 
     public static void into(String url, ImageView view) {
-        Picasso.with(AppInfoUtil.sContext).load(url).fit().into(view);
+        into(url, view, 0);
     }
 
     public static void into(String url, ImageView view, int placeholder) {
-        Picasso.with(AppInfoUtil.sContext).load(url).placeholder(placeholder).fit().into(view);
+        if (url == null) {
+            view.setImageResource(placeholder);
+            return;
+        }
+        Picasso.with(AppInfoUtil.sContext).load(url).placeholder(placeholder).into(view);
     }
 
     public static void intoTransformCircle(String url, ImageView view) {
-        Picasso.with(AppInfoUtil.sContext).load(url).transform(CircleTransform.getInstance()).fit().into(view);
+        intoTransformCircle(url, view, 0);
     }
 
     public static void intoTransformCircle(String url, ImageView view, int placeholder) {
-        Picasso.with(AppInfoUtil.sContext).load(url).placeholder(placeholder).transform(CircleTransform.getInstance()).fit().into(view);
-    }
-
-    public static void into(String url, ImageView view, Target target) {
-        Picasso.with(AppInfoUtil.sContext).load(url).into(target);
+        if (url == null) {
+            view.setImageResource(placeholder);
+            return;
+        }
+        Picasso.with(AppInfoUtil.sContext).load(url).placeholder(placeholder).transform(CircleTransform.getInstance()).into(view);
     }
 
     //将图片裁剪成圆形图片
