@@ -53,6 +53,7 @@ public class EditImageFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
+
     @Override
     protected boolean enableSwipeBack() {
         return false;

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="recycler_item_tag" type="id">recycler_item_tag</item>
+    <item name="recycler_item_tag" type="id"/>
 </resources>

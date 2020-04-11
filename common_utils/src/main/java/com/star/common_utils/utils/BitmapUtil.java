@@ -18,6 +18,7 @@ import android.view.View;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -36,7 +37,8 @@ public class BitmapUtil {
     @IntDef({decodeMode_min_floor, decodeMode_min_round, decodeMode_min_ceil,
             decodeMode_max_floor, decodeMode_max_round, decodeMode_max_ceil})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ImgDecodeMode {}
+    public @interface ImgDecodeMode {
+    }
 
     private BitmapUtil() {
     }
@@ -181,10 +183,16 @@ public class BitmapUtil {
         boolean status = true;
         FileOutputStream out = null;
         try {
+            File file = new File(filename);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             out = new FileOutputStream(filename);
             bitmap.compress(format, quality, out);
         } catch (FileNotFoundException e) {
             status = false;
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             IOUtil.close(out);
         }
@@ -193,6 +201,7 @@ public class BitmapUtil {
 
     /**
      * 根据view的布局创建bitmap
+     *
      * @param view
      * @param width
      * @param height
