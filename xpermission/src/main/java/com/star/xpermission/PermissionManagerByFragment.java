@@ -54,6 +54,9 @@ public class PermissionManagerByFragment {
     }
 
     protected static void permissionRequest(Activity activity, int requestCode, String[] permissions, OnPermissionCallback callback) {
+        if (activity == null) {
+            return;
+        }
         if (checkPermission(activity, permissions) || Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             callback.onPermissionGranted(requestCode);
         } else {
