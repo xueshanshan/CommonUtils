@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.dialogFragmentFullScreen).setOnClickListener(this);
         findViewById(R.id.dialogFragmentUnFullScreen).setOnClickListener(this);
         findViewById(R.id.bottom_pop_dialog_fragment).setOnClickListener(this);
+        findViewById(R.id.tips_guide).setOnClickListener(this);
     }
 
 
@@ -105,6 +106,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     }
                 });
                 bottomPopListDialogFragment.show(getSupportFragmentManager());
+                break;
+            case R.id.tips_guide:
+                TipsActivity.Companion.showActivity(this);
                 break;
         }
     }

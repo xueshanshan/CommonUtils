@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false">
+
+    <com.star.common_utils.widget.TipsBgView
+        android:id="@+id/tips_bg_view"
+        android:layout_width="250dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:triangle_height="8dp"
+        app:triangle_width="14dp">
+
+        <ImageView
+            android:id="@+id/img_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="-8dp"
+            android:src="@drawable/dache_person" />
+
+        <TextView
+            android:id="@+id/tv_tip_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/img_tip_close"
+            android:layout_toRightOf="@+id/img_person"
+            android:gravity="center"
+            android:paddingTop="7dp"
+            android:text="快车·优享·出租车·专车·豪华车"
+            android:textColor="@android:color/white"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tv_tip_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/img_tip_close"
+            android:layout_toRightOf="@+id/img_person"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="叫“打车”了！"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_tip_close"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:paddingRight="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/tips_icon_close" />
+    </com.star.common_utils.widget.TipsBgView>
+</android.support.constraint.ConstraintLayout>

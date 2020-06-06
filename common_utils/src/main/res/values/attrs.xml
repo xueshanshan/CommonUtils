@@ -98,4 +98,21 @@
         <attr name="duration_down" />
         <attr name="duration_up" />
     </declare-styleable>
+
+    <!-- TipsBgView -->
+    <declare-styleable name="TipsBgView">
+        <attr name="triangle_width" format="dimension" />
+        <attr name="triangle_height" format="dimension" />
+        <attr name="triangle_top" format="dimension" />
+        <attr name="triangle_left" format="dimension" />
+        <attr name="triangle_pos">
+            <flag name="left" value="1" />
+            <flag name="right" value="2" />
+            <flag name="top" value="3" />
+            <flag name="bottom" value="4" />
+        </attr>
+        <attr name="corner_radius" format="dimension" />
+        <attr name="start_color" format="color" />
+        <attr name="end_color" format="color" />
+    </declare-styleable>
 </resources>

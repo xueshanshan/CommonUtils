@@ -3,9 +3,7 @@
     package="com.star.commonutils">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!--适配8.0安装app需要添加该权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 适配8.0安装app需要添加该权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
@@ -22,9 +20,7 @@
             android:value="${VERSION_TYPE_VALUE}" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
-
-        <!-- FileProvider 提供文件的Uri-->
+            android:value="${UMENG_CHANNEL_VALUE}" /> <!-- FileProvider 提供文件的Uri -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.star.commonutils.fileprovider"
@@ -48,6 +44,7 @@
         <activity android:name=".activities.TranslucentStatusBarActivity" />
         <activity android:name=".activities.DispatcherActivity" />
         <activity android:name=".activities.BannersActivity" />
+        <activity android:name=".activities.TipsActivity" />
     </application>
 
 </manifest>
