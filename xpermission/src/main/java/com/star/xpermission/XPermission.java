@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
 
 /**
@@ -65,16 +66,34 @@ public class XPermission {
     }
 
     public static void showTipDialog(final Context context, String title, String message) {
-        Dialog dialog = new AlertDialog.Builder(context)
+        showTipDialog(context, title, message, "取消", "设置权限", R.style.TipsDialogTheme, null);
+    }
+
+    public static void showTipDialog(final Context context, String title, String message, String leftText, String rightText, final OnTipDialogCallback callback) {
+        showTipDialog(context, title, message, leftText, rightText, R.style.TipsDialogTheme, callback);
+    }
+
+    public static void showTipDialog(final Context context, String title, String message, String leftText, String rightText, @StyleRes int themeResId, final OnTipDialogCallback callback) {
+        Dialog dialog = new AlertDialog.Builder(context, themeResId)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("设置权限", new DialogInterface.OnClickListener() {
+                .setNegativeButton(leftText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (callback != null) {
+                            callback.onCancel();
+                        }
+                    }
+                })
+                .setPositiveButton(rightText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         toSetPermissions(context);
+                        if (callback != null) {
+                            callback.onSure();
+                        }
                     }
                 })
-                .setNegativeButton("取消", null)
                 .create();
         dialog.show();
     }

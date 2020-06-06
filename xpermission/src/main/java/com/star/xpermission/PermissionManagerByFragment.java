@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 /**
@@ -39,15 +38,6 @@ public class PermissionManagerByFragment {
         return true;
     }
 
-    private static String shouldShowRequestPermissionRationale(Activity activity, String[] permissions) {
-        for (String permission : permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                return permission;
-            }
-        }
-        return null;
-    }
-
     protected static void permissionRequest(Activity activity, @PermissionSparseArray.PermissionRequestCode int requestCode, OnPermissionCallback callback) {
         String[] permissions = PermissionSparseArray.getInstance().get(requestCode);
         permissionRequest(activity, requestCode, permissions, callback);
@@ -60,12 +50,7 @@ public class PermissionManagerByFragment {
         if (checkPermission(activity, permissions) || Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             callback.onPermissionGranted(requestCode);
         } else {
-            String requestPermissionRationale = shouldShowRequestPermissionRationale(activity, permissions);
-            if (requestPermissionRationale != null) {
-                callback.shouldShowRequestPermissionTip(requestPermissionRationale, requestCode);
-            } else {
-                getOnPermissionFragment(activity).permissionRequest(requestCode, permissions, callback);
-            }
+            getOnPermissionFragment(activity).permissionRequest(requestCode, permissions, callback);
         }
     }
 }

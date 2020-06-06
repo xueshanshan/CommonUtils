@@ -1,10 +1,12 @@
 package com.star.xpermission;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.util.SparseArray;
 
 /**
@@ -47,9 +49,20 @@ public class OnPermissionFragment extends Fragment {
             if (granted) {
                 callback.onPermissionGranted(requestCode);
             } else {
-                callback.onPermissionDenied(deniedPermission, requestCode);
+                callback.onPermissionDenied(deniedPermission, requestCode, shouldShowRequestPermissionRationale(getActivity(), permissions) == null);
             }
         }
+    }
+
+    private static String shouldShowRequestPermissionRationale(Activity activity, String[] permissions) {
+        if (activity != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                    return permission;
+                }
+            }
+        }
+        return null;
     }
 
     private OnPermissionCallback findCallback(int requestCode) {

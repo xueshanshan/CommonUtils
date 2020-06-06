@@ -69,13 +69,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     }
 
                     @Override
-                    public void onPermissionDenied(String deniedPermission, int reqCode) {
-                        XPermission.showTipDialog(MainActivity.this, "请授予权限", "该权限读取sd卡内容");
-                    }
-
-                    @Override
-                    public void shouldShowRequestPermissionTip(String requestPermissionRationale, int reqCode) {
-                        XPermission.showTipDialog(MainActivity.this, "请授予权限", "该权限读取sd卡内容");
+                    public void onPermissionDenied(String deniedPermission, int reqCode, boolean mustShowCustomDialog) {
+                        if (mustShowCustomDialog) {
+                            XPermission.showTipDialog(MainActivity.this, "请授予权限", "该权限读取sd卡内容");
+                        }
                     }
                 });
                 break;

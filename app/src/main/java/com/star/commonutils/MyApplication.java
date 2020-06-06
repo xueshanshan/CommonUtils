@@ -23,7 +23,7 @@ public class MyApplication extends Application {
         }
         new LogUtil.Builder().debug(BuildConfig.DEBUG).globalTag("common_utils").init();
         AppInfoUtil.init(this);
-        ScreenUtil.initCustomDensityApp(this);
+//        ScreenUtil.initCustomDensityApp(this);
         LifecycleUtil.init(this);
         FileUtil.makeDirIfNotExist(StorageUtil.ROOT_DIR_PATH);
         FileUtil.makeDirIfNotExist(StorageUtil.ROOT_DIR_PIC);

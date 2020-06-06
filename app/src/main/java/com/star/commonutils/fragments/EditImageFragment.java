@@ -66,12 +66,9 @@ public class EditImageFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
-    public void onPermissionDenied(String deniedPermission, int reqCode) {
-        XPermission.showTipDialog(mActivity, "需要存储权限", "没有存储权限可能导致存储图片失败");
-    }
-
-    @Override
-    public void shouldShowRequestPermissionTip(String requestPermissionRationale, int reqCode) {
-        XPermission.showTipDialog(mActivity, "需要存储权限", "没有存储权限可能导致存储图片失败");
+    public void onPermissionDenied(String deniedPermission, int reqCode, boolean mustShowCustomDialog) {
+        if (mustShowCustomDialog) {
+            XPermission.showTipDialog(mActivity, "需要存储权限", "没有存储权限可能导致存储图片失败");
+        }
     }
 }
