@@ -12,8 +12,9 @@ import com.star.common_utils.utils.AppUtil
  * created by xueshanshan on 2020/6/5
  */
 class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
+    @Target(AnnotationTarget.PROPERTY, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
     @IntDef(POS_TRIANGLE_LEFT, POS_TRIANGLE_RIGHT, POS_TRIANGLE_TOP, POS_TRIANGLE_BOTTOM)
-    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+    @Retention(AnnotationRetention.SOURCE)
     annotation class TrianglePos
 
     companion object {
@@ -89,24 +90,24 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             addRoundRect(mRectF, mCornerRadius, mCornerRadius, Path.Direction.CW)
             when (mTrianglePos) {
                 POS_TRIANGLE_TOP -> {
-                    moveTo(mRectF.left + mTriangleLeft, mRectF.top)
-                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth / 2, mRectF.top - mTriangleHeight)
-                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth, mRectF.top)
+                    moveTo(mRectF.left + mTriangleLeft - mTriangleWidth / 2, mRectF.top)
+                    lineTo(mRectF.left + mTriangleLeft, mRectF.top - mTriangleHeight)
+                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth / 2, mRectF.top)
                 }
                 POS_TRIANGLE_BOTTOM -> {
-                    moveTo(mRectF.left + mTriangleLeft, mRectF.bottom)
-                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth / 2, mRectF.bottom + mTriangleHeight)
-                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth, mRectF.bottom)
+                    moveTo(mRectF.left + mTriangleLeft - mTriangleWidth / 2, mRectF.bottom)
+                    lineTo(mRectF.left + mTriangleLeft, mRectF.bottom + mTriangleHeight)
+                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth / 2, mRectF.bottom)
                 }
                 POS_TRIANGLE_LEFT -> {
-                    moveTo(mRectF.left, mRectF.top + mTriangleTop)
-                    lineTo(mRectF.left - mTriangleHeight, mRectF.top + mTriangleTop + mTriangleWidth / 2)
-                    lineTo(mRectF.left, mRectF.top + mTriangleTop + mTriangleWidth)
+                    moveTo(mRectF.left, mRectF.top + mTriangleTop - mTriangleWidth / 2)
+                    lineTo(mRectF.left - mTriangleHeight, mRectF.top + mTriangleTop)
+                    lineTo(mRectF.left, mRectF.top + mTriangleTop + mTriangleWidth / 2)
                 }
                 POS_TRIANGLE_RIGHT -> {
-                    moveTo(mRectF.right, mRectF.top + mTriangleTop)
-                    lineTo(mRectF.right + mTriangleHeight, mRectF.top + mTriangleTop + mTriangleWidth / 2)
-                    lineTo(mRectF.right, mRectF.top + mTriangleTop + mTriangleWidth)
+                    moveTo(mRectF.right, mRectF.top + mTriangleTop - mTriangleWidth / 2)
+                    lineTo(mRectF.right + mTriangleHeight, mRectF.top + mTriangleTop)
+                    lineTo(mRectF.right, mRectF.top + mTriangleTop + mTriangleWidth / 2)
                 }
             }
             canvas?.drawPath(mPath, mPaint)
@@ -134,27 +135,27 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         when (mTrianglePos) {
             POS_TRIANGLE_TOP -> {
                 left = paddingLeft.toFloat()
-                top = (paddingTop + mTriangleHeight).toFloat()
-                right = (mTotalWidth - paddingRight).toFloat()
-                bottom = (mTotalHeight - paddingBottom).toFloat()
+                top = (paddingTop + mTriangleHeight)
+                right = (mTotalWidth - paddingRight)
+                bottom = (mTotalHeight - paddingBottom)
             }
             POS_TRIANGLE_BOTTOM -> {
                 left = paddingLeft.toFloat()
                 top = paddingTop.toFloat()
-                right = (mTotalWidth - paddingRight).toFloat()
-                bottom = (mTotalHeight - paddingBottom - mTriangleHeight).toFloat()
+                right = (mTotalWidth - paddingRight)
+                bottom = (mTotalHeight - paddingBottom - mTriangleHeight)
             }
             POS_TRIANGLE_LEFT -> {
-                left = (paddingLeft + mTriangleHeight).toFloat()
+                left = (paddingLeft + mTriangleHeight)
                 top = paddingTop.toFloat()
-                right = (mTotalWidth - paddingRight).toFloat()
-                bottom = (mTotalHeight - paddingBottom).toFloat()
+                right = (mTotalWidth - paddingRight)
+                bottom = (mTotalHeight - paddingBottom)
             }
             POS_TRIANGLE_RIGHT -> {
                 left = paddingLeft.toFloat()
                 top = paddingTop.toFloat()
-                right = (mTotalWidth - paddingRight - mTriangleHeight).toFloat()
-                bottom = (mTotalHeight - paddingBottom).toFloat()
+                right = (mTotalWidth - paddingRight - mTriangleHeight)
+                bottom = (mTotalHeight - paddingBottom)
             }
         }
         mRectF = RectF(left, top, right, bottom)
@@ -165,5 +166,5 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         mPaint.shader = mShader
     }
 
-    fun getTriangleWidth() = mTriangleWidth
+    fun getTotalWidth() = mTotalWidth
 }

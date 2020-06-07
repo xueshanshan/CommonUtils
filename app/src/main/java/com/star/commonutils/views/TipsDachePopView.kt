@@ -2,16 +2,18 @@ package com.star.commonutils.views
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.PopupWindow
 import android.widget.TextView
 import com.star.common_utils.utils.AppUtil
 import com.star.common_utils.utils.UIUtil
+import com.star.common_utils.utils.UIUtil.removeViewFromParent
 import com.star.common_utils.widget.TipsBgView
 import com.star.commonutils.R
 
@@ -19,29 +21,21 @@ import com.star.commonutils.R
 /**
  *   created by xueshanshan on 2020/6/5
  */
-class TipsDachePopWindow(val mContext: Context) : PopupWindow() {
+class TipsDachePopView(val mContext: Context) {
 
-    private val mTvTip1: TextView
-    private val mTvTip2: TextView
-    private val mImgTipClose: ImageView
-    private val mTipsBgView: TipsBgView
+    private val mRootView = LayoutInflater.from(mContext).inflate(R.layout.dache_tips_container, null)
+    private val mTvTip1: TextView = mRootView.findViewById(R.id.tv_tip_1)
+    private val mTvTip2: TextView = mRootView.findViewById(R.id.tv_tip_2)
+    private val mImgTipClose: ImageView = mRootView.findViewById(R.id.img_tip_close)
+    private val mTipsBgView: TipsBgView = mRootView.findViewById(R.id.tips_bg_view)
     private var mCloseClickCallBack: (() -> Unit)? = null
+    private lateinit var mActivity: Activity
 
     init {
-        width = ViewGroup.LayoutParams.WRAP_CONTENT
-        height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        isOutsideTouchable = false;//设置点击外部区域popWindow是否会消失
-        update();
-
-        contentView = LayoutInflater.from(mContext).inflate(R.layout.dache_tips_container, null)
-        mTvTip1 = contentView.findViewById(R.id.tv_tip_1)
-        mTvTip2 = contentView.findViewById(R.id.tv_tip_2)
-        mImgTipClose = contentView.findViewById(R.id.img_tip_close)
         mImgTipClose.setOnClickListener {
             mCloseClickCallBack?.invoke()
-            doDismissAnimation()
+            dismiss()
         }
-        mTipsBgView = contentView.findViewById(R.id.tips_bg_view)
     }
 
     fun setCloseClickCallBack(calback: (() -> Unit)?) {
@@ -53,32 +47,36 @@ class TipsDachePopWindow(val mContext: Context) : PopupWindow() {
         mTvTip2.text = text2
     }
 
-    override fun showAsDropDown(anchor: View?) {
-        anchor?.post {
-            anchor.run {
+    fun show(activity: Activity, view: View?) {
+        if (mRootView.parent != null) {
+            removeViewFromParent(mRootView)
+        }
+        mActivity = activity
+        view?.post {
+            view.run {
                 val location = IntArray(2)
                 getLocationOnScreen(location)
-                var size = UIUtil.getScreenAvailAbleSize(mContext).x - location[0]
-                size -= AppUtil.dp2px(context, 250)
-                val leftAdd = if (size < 0) Math.abs(size).toFloat() else 0f
-                if (leftAdd > 0) {
-                    mTipsBgView.mTriangleLeft = leftAdd + width / 2f - mTipsBgView.getTriangleWidth() / 2f
-                } else {
-                    mTipsBgView.mTriangleLeft = (leftAdd + width / 2f - mTipsBgView.getTriangleWidth() / 2f - AppUtil.dp2px(context, 8))
-                }
-                super.showAsDropDown(anchor, 0, -AppUtil.dp2px(context, 10))
-                doShowAnimation();
+                val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                layoutParams.topMargin = location[1] + height - AppUtil.dp2px(mContext, 10)
+                mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                val beyondSize = UIUtil.getScreenAvailAbleSize(mContext).x.toFloat() - location[0].toFloat() - mRootView.measuredWidth
+                val size = if (beyondSize > 0) 0f else beyondSize
+                layoutParams.leftMargin = location[0] + size.toInt()
+                mTipsBgView.mTriangleLeft = mTipsBgView.paddingLeft.toFloat() + width / 2f - AppUtil.dp2px(mContext, 8) - size
+                val parent = activity.window.decorView as FrameLayout
+                parent.addView(mRootView, layoutParams)
+                doShowAnimation()
             }
         }
     }
 
     private fun doShowAnimation() {
-        val scaleXAnimationContentView = ObjectAnimator.ofFloat(contentView, "scaleX", 0f, 1f)
+        val scaleXAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleX", 0f, 1f)
         scaleXAnimationContentView.duration = 300
-        val scaleYAnimationContentView = ObjectAnimator.ofFloat(contentView, "scaleY", 0f, 1f)
+        val scaleYAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleY", 0f, 1f)
         scaleYAnimationContentView.duration = 300
-        contentView.pivotX = mTipsBgView.mTriangleLeft + mTipsBgView.getTriangleWidth() / 2
-        contentView.pivotY = 0f
+        mRootView.pivotX = mTipsBgView.mTriangleLeft + AppUtil.dp2px(mContext, 8)
+        mRootView.pivotY = 0f
         scaleXAnimationContentView.start()
         scaleYAnimationContentView.start()
 
@@ -131,13 +129,13 @@ class TipsDachePopWindow(val mContext: Context) : PopupWindow() {
         }
     }
 
-    fun doDismissAnimation() {
-        val scaleXAnimationContentView = ObjectAnimator.ofFloat(contentView, "scaleX", 1f, 0f)
+    fun dismiss() {
+        val scaleXAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleX", 1f, 0f)
         scaleXAnimationContentView.duration = 300
-        val scaleYAnimationContentView = ObjectAnimator.ofFloat(contentView, "scaleY", 1f, 0f)
+        val scaleYAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleY", 1f, 0f)
         scaleYAnimationContentView.duration = 300
-        contentView.pivotX = mTipsBgView.mTriangleLeft + mTipsBgView.getTriangleWidth() / 2
-        contentView.pivotY = 0f
+        mRootView.pivotX = mTipsBgView.mTriangleLeft + AppUtil.dp2px(mContext, 8)
+        mRootView.pivotY = 0f
         scaleXAnimationContentView.start()
         scaleYAnimationContentView.start()
         scaleXAnimationContentView.addListener(object : Animator.AnimatorListener {
@@ -146,7 +144,7 @@ class TipsDachePopWindow(val mContext: Context) : PopupWindow() {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                dismiss()
+                removeViewFromParent(mRootView)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
