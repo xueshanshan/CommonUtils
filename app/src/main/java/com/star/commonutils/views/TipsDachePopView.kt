@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ class TipsDachePopView(val mContext: Context) {
     private val mImgTipClose: ImageView = mRootView.findViewById(R.id.img_tip_close)
     private val mTipsBgView: TipsBgView = mRootView.findViewById(R.id.tips_bg_view)
     private var mCloseClickCallBack: (() -> Unit)? = null
-    private lateinit var mActivity: Activity
+    private var mShowCount = 0;
 
     init {
         mImgTipClose.setOnClickListener {
@@ -45,27 +46,36 @@ class TipsDachePopView(val mContext: Context) {
     fun setContent(text1: String, text2: String) {
         mTvTip1.text = text1
         mTvTip2.text = text2
+        mTvTip2.setTextSize(TypedValue.COMPLEX_UNIT_PX, (if (text1.isEmpty()) AppUtil.dp2px(mContext, 15) else AppUtil.dp2px(mContext, 18)).toFloat())
     }
 
-    fun show(activity: Activity, view: View?) {
+    fun show(activity: Activity?, view: View?) {
         if (mRootView.parent != null) {
             removeViewFromParent(mRootView)
+            mShowCount = 0
         }
-        mActivity = activity
+        if (activity == null) {
+            return
+        }
+        mShowCount++;
         view?.post {
             view.run {
-                val location = IntArray(2)
-                getLocationOnScreen(location)
-                val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                layoutParams.topMargin = location[1] + height - AppUtil.dp2px(mContext, 10)
-                mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                val beyondSize = UIUtil.getScreenAvailAbleSize(mContext).x.toFloat() - location[0].toFloat() - mRootView.measuredWidth
-                val size = if (beyondSize > 0) 0f else beyondSize
-                layoutParams.leftMargin = location[0] + size.toInt()
-                mTipsBgView.mTriangleLeft = mTipsBgView.paddingLeft.toFloat() + width / 2f - AppUtil.dp2px(mContext, 8) - size
-                val parent = activity.window.decorView as FrameLayout
-                parent.addView(mRootView, layoutParams)
-                doShowAnimation()
+                if (mShowCount > 0) {
+                    val location = IntArray(2)
+                    getLocationOnScreen(location)
+                    val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    layoutParams.topMargin = (location[1] + height - AppUtil.dp2px(mContext, 10)).toInt()
+                    mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                    if (location[0] + width / 2 <= UIUtil.getScreenAvailAbleSize(mContext).x / 2 + AppUtil.dp2px(mContext, 5)) {
+                        layoutParams.leftMargin = 0
+                    } else {
+                        layoutParams.leftMargin = UIUtil.getScreenAvailAbleSize(mContext).x - AppUtil.dp2px(mContext, 4) - mRootView.measuredWidth
+                    }
+                    mTipsBgView.mTriangleLeft = (location[0] + width / 2 - layoutParams.leftMargin - AppUtil.dp2px(mContext, 8)).toFloat()
+                    val parent = activity.window.decorView as FrameLayout
+                    parent.addView(mRootView, layoutParams)
+                    doShowAnimation()
+                }
             }
         }
     }
@@ -81,6 +91,7 @@ class TipsDachePopView(val mContext: Context) {
         scaleYAnimationContentView.start()
 
         mTvTip1.visibility = View.INVISIBLE
+        mTvTip2.translationY = 0f
         if (!TextUtils.isEmpty(mTvTip1.text.toString()) && !TextUtils.isEmpty(mTvTip2.text.toString())) {
             mTvTip2.visibility = View.INVISIBLE
             mTvTip1.postDelayed({
@@ -129,7 +140,15 @@ class TipsDachePopView(val mContext: Context) {
         }
     }
 
+    fun isShown(): Boolean {
+        return mShowCount > 0
+    }
+
     fun dismiss() {
+        if (!isShown()) {
+            return
+        }
+        mShowCount--
         val scaleXAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleX", 1f, 0f)
         scaleXAnimationContentView.duration = 300
         val scaleYAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleY", 1f, 0f)

@@ -31,8 +31,8 @@
             android:layout_toLeftOf="@+id/img_tip_close"
             android:layout_toRightOf="@+id/img_person"
             android:gravity="center"
-            android:paddingTop="7dp"
-            android:text="快车·优享·出租车·专车·豪华车"
+            android:paddingTop="8dp"
+            android:text="快车·优享"
             android:textColor="@android:color/white"
             android:textSize="12dp" />
 
@@ -44,8 +44,8 @@
             android:layout_toLeftOf="@+id/img_tip_close"
             android:layout_toRightOf="@+id/img_person"
             android:gravity="center"
-            android:paddingTop="6dp"
-            android:text="叫“打车”了！"
+            android:paddingTop="8dp"
+            android:text="叫“打车”了!"
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:textStyle="bold" />

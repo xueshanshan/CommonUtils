@@ -38,10 +38,23 @@ class TipsActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         v?.run {
-            mTipsDachePopView = TipsDachePopView(this@TipsActivity)
-            mTipsDachePopView.show(this@TipsActivity, v)
-//            mTipsCommonView = TipsCommonView(this@TipsActivity)
-//            mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_TOP)
+//            mTipsDachePopView = TipsDachePopView(this@TipsActivity)
+//            mTipsDachePopView.show(this@TipsActivity, v)
+            mTipsCommonView = TipsCommonView(this@TipsActivity)
+            when (v.id) {
+                R.id.text1, R.id.text2, R.id.text3, R.id.text5 -> {
+                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_TOP)
+                }
+                R.id.text4 -> {
+                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_LEFT)
+                }
+                R.id.text6 -> {
+                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_RIGHT)
+                }
+                R.id.text7, R.id.text8, R.id.text9 -> {
+                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_BOTTOM)
+                }
+            }
         }
     }
 }

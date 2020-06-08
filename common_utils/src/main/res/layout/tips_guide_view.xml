@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.star.common_utils.widget.TipsBgView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tips_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_tip"
+    <LinearLayout
+        android:id="@+id/tips_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="这是新用户引导文案"
-        android:textColor="@android:color/white"
-        android:textSize="13sp" />
+        android:paddingTop="10dp">
 
-    <ImageView
-        android:id="@+id/img_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_tip"
-        android:layout_alignBottom="@+id/tv_tip"
-        android:layout_toRightOf="@+id/tv_tip"
-        android:paddingRight="10dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/tips_icon_close" />
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="这是新用户引导文案"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/tips_icon_close" />
+
+    </LinearLayout>
 </com.star.common_utils.widget.TipsBgView>

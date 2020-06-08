@@ -39,7 +39,12 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     //三角形的位置
     @TrianglePos
-    private var mTrianglePos = POS_TRIANGLE_TOP
+    var mTrianglePos = POS_TRIANGLE_TOP
+        set(value) {
+            field = value
+            initRectFs()
+            invalidate()
+        }
 
     //三角左边位置（位置居上和居下生效）
     var mTriangleLeft = 0f
@@ -49,22 +54,53 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
     //三角上边位置（位置居左和居右生效）
-    private var mTriangleTop = 0f
+    var mTriangleTop = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     //三角宽度
-    private var mTriangleWidth = 0f
+    var mTriangleWidth = 0f
+        set(value) {
+            field = value
+            initRectFs()
+            invalidate()
+        }
 
     //三角高度
-    private var mTriangleHeight = 0f
+    var mTriangleHeight = 0f
+        set(value) {
+            field = value
+            initRectFs()
+            invalidate()
+        }
 
     //圆角角度
-    private var mCornerRadius = 0f
+    var mCornerRadius = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     //渐变开始颜色
-    private var mStartColor = 0;
+    var mStartColor = 0
+        set(value) {
+            field = value
+            initShader()
+            invalidate()
+        }
 
     //渐变结束颜色
-    private var mEndColor = 0;
+    private var mEndColor = 0
+        set(value) {
+            field = value
+            initShader()
+            invalidate()
+        }
+
+    private var mTriangleSideCorner = 6;
+    private var mTriangleTopCorner = 6;
 
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.TipsBgView)
@@ -120,14 +156,18 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         mTotalWidth = measuredWidth.toFloat()
         mTotalHeight = measuredHeight.toFloat()
-        if (mTotalWidth > 0 && mTotalHeight > 0 && !mRectInited) {
-            mRectInited = true
+        //为了防止多次测量，导致对象多次重建的问题
+        if (!mRectInited) {
             initRectFs()
             initShader()
         }
     }
 
     private fun initRectFs() {
+        if (mTotalWidth <= 0 || mTotalHeight <= 0) {
+            return
+        }
+        mRectInited = true
         var left = 0f
         var top = 0f
         var right = 0f
@@ -162,9 +202,10 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     private fun initShader() {
+        if (mTotalWidth <= 0 || mTotalHeight <= 0) {
+            return
+        }
         mShader = LinearGradient(paddingLeft.toFloat(), 0f, mTotalWidth, 0f, mStartColor, mEndColor, Shader.TileMode.CLAMP)
         mPaint.shader = mShader
     }
-
-    fun getTotalWidth() = mTotalWidth
 }
