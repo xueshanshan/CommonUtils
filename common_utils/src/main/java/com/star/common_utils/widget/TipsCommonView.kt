@@ -52,7 +52,7 @@ class TipsCommonView(val mContext: Context) {
                         val beyondSize = UIUtil.getScreenAvailAbleSize(mContext).x - location[0] - mRootView.measuredWidth
                         val size = if (beyondSize > 0) 0 else beyondSize
                         layoutParams.leftMargin = location[0] + size
-                        mRootView.mTriangleLeft = mRootView.paddingLeft + width / 2f - size
+                        mRootView.mTriangleLeftMargin = mRootView.paddingLeft + width / 2f - size
                         val parent = activity.window.decorView as FrameLayout
                         parent.addView(mRootView, layoutParams)
                         doShowAnimation()
@@ -64,7 +64,7 @@ class TipsCommonView(val mContext: Context) {
                         val beyondSize = UIUtil.getScreenAvailAbleSize(mContext).x - location[0] - mRootView.measuredWidth
                         val size = if (beyondSize > 0) 0 else beyondSize
                         layoutParams.leftMargin = location[0] + size
-                        mRootView.mTriangleLeft = mRootView.paddingLeft + width / 2f - size
+                        mRootView.mTriangleLeftMargin = mRootView.paddingLeft + width / 2f - size
                         val parent = activity.window.decorView as FrameLayout
                         parent.addView(mRootView, layoutParams)
                         doShowAnimation()
@@ -74,7 +74,7 @@ class TipsCommonView(val mContext: Context) {
                         mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
                         layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
                         layoutParams.leftMargin = location[0] + width
-                        mRootView.mTriangleTop = (mRootView.measuredHeight / 2).toFloat()
+                        mRootView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
                         val parent = activity.window.decorView as FrameLayout
                         parent.addView(mRootView, layoutParams)
                         doShowAnimation()
@@ -84,7 +84,7 @@ class TipsCommonView(val mContext: Context) {
                         mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
                         layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
                         layoutParams.leftMargin = location[0] - mRootView.measuredWidth
-                        mRootView.mTriangleTop = (mRootView.measuredHeight / 2).toFloat()
+                        mRootView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
                         val parent = activity.window.decorView as FrameLayout
                         parent.addView(mRootView, layoutParams)
                         doShowAnimation()
@@ -102,11 +102,11 @@ class TipsCommonView(val mContext: Context) {
         scaleAnimationX = ObjectAnimator.ofFloat(mRootView, "scaleX", 0f, 1f)
         when (mRootView.mTrianglePos) {
             TipsBgView.POS_TRIANGLE_TOP -> {
-                mRootView.pivotX = mRootView.mTriangleLeft
+                mRootView.pivotX = mRootView.mTriangleLeftMargin
                 mRootView.pivotY = 0f
             }
             TipsBgView.POS_TRIANGLE_BOTTOM -> {
-                mRootView.pivotX = mRootView.mTriangleLeft
+                mRootView.pivotX = mRootView.mTriangleLeftMargin
                 mRootView.pivotY = mRootView.measuredHeight.toFloat()
             }
             TipsBgView.POS_TRIANGLE_LEFT -> {

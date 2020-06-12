@@ -71,7 +71,7 @@ class TipsDachePopView(val mContext: Context) {
                     } else {
                         layoutParams.leftMargin = UIUtil.getScreenAvailAbleSize(mContext).x - AppUtil.dp2px(mContext, 4) - mRootView.measuredWidth
                     }
-                    mTipsBgView.mTriangleLeft = (location[0] + width / 2 - layoutParams.leftMargin - AppUtil.dp2px(mContext, 8)).toFloat()
+                    mTipsBgView.mTriangleLeftMargin = (location[0] + width / 2 - layoutParams.leftMargin - AppUtil.dp2px(mContext, 8)).toFloat()
                     val parent = activity.window.decorView as FrameLayout
                     parent.addView(mRootView, layoutParams)
                     doShowAnimation()
@@ -85,7 +85,7 @@ class TipsDachePopView(val mContext: Context) {
         scaleXAnimationContentView.duration = 300
         val scaleYAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleY", 0f, 1f)
         scaleYAnimationContentView.duration = 300
-        mRootView.pivotX = mTipsBgView.mTriangleLeft + AppUtil.dp2px(mContext, 8)
+        mRootView.pivotX = mTipsBgView.mTriangleLeftMargin + AppUtil.dp2px(mContext, 8)
         mRootView.pivotY = 0f
         scaleXAnimationContentView.start()
         scaleYAnimationContentView.start()
@@ -153,7 +153,7 @@ class TipsDachePopView(val mContext: Context) {
         scaleXAnimationContentView.duration = 300
         val scaleYAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleY", 1f, 0f)
         scaleYAnimationContentView.duration = 300
-        mRootView.pivotX = mTipsBgView.mTriangleLeft + AppUtil.dp2px(mContext, 8)
+        mRootView.pivotX = mTipsBgView.mTriangleLeftMargin + AppUtil.dp2px(mContext, 8)
         mRootView.pivotY = 0f
         scaleXAnimationContentView.start()
         scaleYAnimationContentView.start()

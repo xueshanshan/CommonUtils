@@ -103,8 +103,8 @@
     <declare-styleable name="TipsBgView">
         <attr name="triangle_width" format="dimension" />
         <attr name="triangle_height" format="dimension" />
-        <attr name="triangle_top" format="dimension" />
-        <attr name="triangle_left" format="dimension" />
+        <attr name="triangle_top_margin" format="dimension" />
+        <attr name="triangle_left_margin" format="dimension" />
         <attr name="triangle_pos">
             <flag name="left" value="1" />
             <flag name="right" value="2" />
@@ -112,6 +112,8 @@
             <flag name="bottom" value="4" />
         </attr>
         <attr name="corner_radius" format="dimension" />
+        <attr name="triangle_side_corners_radius" format="dimension" />
+        <attr name="triangle_top_corners_radius" format="dimension" />
         <attr name="start_color" format="color" />
         <attr name="end_color" format="color" />
     </declare-styleable>

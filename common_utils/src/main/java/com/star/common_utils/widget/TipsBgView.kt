@@ -7,6 +7,9 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.star.common_utils.R
 import com.star.common_utils.utils.AppUtil
+import kotlin.math.atan
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * created by xueshanshan on 2020/6/5
@@ -46,15 +49,15 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             invalidate()
         }
 
-    //三角左边位置（位置居上和居下生效）
-    var mTriangleLeft = 0f
+    //三角中心距离左边位置（位置居上和居下生效）
+    var mTriangleLeftMargin = 0f
         set(value) {
             field = value
             invalidate()
         }
 
-    //三角上边位置（位置居左和居右生效）
-    var mTriangleTop = 0f
+    //三角中心距离上边位置（位置居左和居右生效）
+    var mTriangleTopMargin = 0f
         set(value) {
             field = value
             invalidate()
@@ -99,19 +102,24 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             invalidate()
         }
 
-    private var mTriangleSideCorner = 6;
-    private var mTriangleTopCorner = 6;
+    //三角形边上圆角
+    private var mTriangleSideCornerRadius = 0f
+
+    //三角形顶部圆角
+    private var mTriangleTopCornerRadius = 0f
 
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.TipsBgView)
-        mTriangleLeft = ta.getDimension(R.styleable.TipsBgView_triangle_left, AppUtil.dp2px(context, 20).toFloat())
-        mTriangleTop = ta.getDimension(R.styleable.TipsBgView_triangle_top, AppUtil.dp2px(context, 20).toFloat())
+        mTriangleLeftMargin = ta.getDimension(R.styleable.TipsBgView_triangle_left_margin, AppUtil.dp2px(context, 20).toFloat())
+        mTriangleTopMargin = ta.getDimension(R.styleable.TipsBgView_triangle_top_margin, AppUtil.dp2px(context, 20).toFloat())
         mTriangleWidth = ta.getDimension(R.styleable.TipsBgView_triangle_width, AppUtil.dp2px(context, 15).toFloat())
         mTriangleHeight = ta.getDimension(R.styleable.TipsBgView_triangle_height, AppUtil.dp2px(context, 8).toFloat())
         mCornerRadius = ta.getDimension(R.styleable.TipsBgView_corner_radius, AppUtil.dp2px(context, 10).toFloat())
         mStartColor = ta.getColor(R.styleable.TipsBgView_start_color, Color.parseColor("#FF9862"))
         mEndColor = ta.getColor(R.styleable.TipsBgView_end_color, Color.parseColor("#FF5B33"))
         mTrianglePos = ta.getInt(R.styleable.TipsBgView_triangle_pos, POS_TRIANGLE_TOP)
+        mTriangleSideCornerRadius = ta.getDimension(R.styleable.TipsBgView_triangle_height, AppUtil.dp2px(context, 3).toFloat())
+        mTriangleTopCornerRadius = ta.getDimension(R.styleable.TipsBgView_triangle_height, AppUtil.dp2px(context, 3).toFloat())
         ta.recycle()
 
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -124,26 +132,43 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         mPath.apply {
             reset()
             addRoundRect(mRectF, mCornerRadius, mCornerRadius, Path.Direction.CW)
+            val left = mRectF.left + mTriangleLeftMargin
             when (mTrianglePos) {
                 POS_TRIANGLE_TOP -> {
-                    moveTo(mRectF.left + mTriangleLeft - mTriangleWidth / 2, mRectF.top)
-                    lineTo(mRectF.left + mTriangleLeft, mRectF.top - mTriangleHeight)
-                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth / 2, mRectF.top)
+                    moveTo(left - mTriangleWidth / 2 - mTriangleSideCornerRadius, mRectF.top)
+                    val arcTan = atan((mTriangleHeight / (mTriangleWidth / 2)).toDouble())
+                    val x = cos(arcTan) * mTriangleSideCornerRadius
+                    val y = sin(arcTan) * mTriangleSideCornerRadius
+                    quadTo(left - mTriangleWidth / 2, mRectF.top, (left - mTriangleWidth / 2 + x).toFloat(), (mRectF.top - y).toFloat())
+                    val xTop = cos(arcTan) * mTriangleTopCornerRadius
+                    val yTop = sin(arcTan) * mTriangleTopCornerRadius
+                    lineTo((left - xTop).toFloat(), (mRectF.top - (mTriangleHeight - yTop)).toFloat())
+                    quadTo(left, mRectF.top - mTriangleHeight, (left + xTop).toFloat(), (mRectF.top - (mTriangleHeight - yTop)).toFloat())
+                    lineTo((left + mTriangleWidth / 2 - x).toFloat(), (mRectF.top - y).toFloat())
+                    quadTo(left + mTriangleWidth / 2, mRectF.top, left + mTriangleWidth / 2 + mTriangleSideCornerRadius, mRectF.top)
                 }
                 POS_TRIANGLE_BOTTOM -> {
-                    moveTo(mRectF.left + mTriangleLeft - mTriangleWidth / 2, mRectF.bottom)
-                    lineTo(mRectF.left + mTriangleLeft, mRectF.bottom + mTriangleHeight)
-                    lineTo(mRectF.left + mTriangleLeft + mTriangleWidth / 2, mRectF.bottom)
+                    moveTo(left - mTriangleWidth / 2 - mTriangleSideCornerRadius, mRectF.bottom)
+                    val arcTan = atan((mTriangleHeight / (mTriangleWidth / 2)).toDouble())
+                    val x = cos(arcTan) * mTriangleSideCornerRadius
+                    val y = sin(arcTan) * mTriangleSideCornerRadius
+                    quadTo(left - mTriangleWidth / 2, mRectF.bottom, (left - mTriangleWidth / 2 + x).toFloat(), (mRectF.bottom + y).toFloat())
+                    val xTop = cos(arcTan) * mTriangleTopCornerRadius
+                    val yTop = sin(arcTan) * mTriangleTopCornerRadius
+                    lineTo((left - xTop).toFloat(), (mRectF.bottom + mTriangleHeight - yTop).toFloat())
+                    quadTo(left, mRectF.bottom + mTriangleHeight, (left + xTop).toFloat(), (mRectF.bottom + mTriangleHeight - yTop).toFloat())
+                    lineTo((left + mTriangleWidth / 2 - x).toFloat(), (mRectF.bottom + y).toFloat())
+                    quadTo(left + mTriangleWidth / 2, mRectF.bottom, left + mTriangleWidth / 2 + mTriangleSideCornerRadius, mRectF.bottom)
                 }
                 POS_TRIANGLE_LEFT -> {
-                    moveTo(mRectF.left, mRectF.top + mTriangleTop - mTriangleWidth / 2)
-                    lineTo(mRectF.left - mTriangleHeight, mRectF.top + mTriangleTop)
-                    lineTo(mRectF.left, mRectF.top + mTriangleTop + mTriangleWidth / 2)
+                    moveTo(mRectF.left, mRectF.top + mTriangleTopMargin - mTriangleWidth / 2)
+                    lineTo(mRectF.left - mTriangleHeight, mRectF.top + mTriangleTopMargin)
+                    lineTo(mRectF.left, mRectF.top + mTriangleTopMargin + mTriangleWidth / 2)
                 }
                 POS_TRIANGLE_RIGHT -> {
-                    moveTo(mRectF.right, mRectF.top + mTriangleTop - mTriangleWidth / 2)
-                    lineTo(mRectF.right + mTriangleHeight, mRectF.top + mTriangleTop)
-                    lineTo(mRectF.right, mRectF.top + mTriangleTop + mTriangleWidth / 2)
+                    moveTo(mRectF.right, mRectF.top + mTriangleTopMargin - mTriangleWidth / 2)
+                    lineTo(mRectF.right + mTriangleHeight, mRectF.top + mTriangleTopMargin)
+                    lineTo(mRectF.right, mRectF.top + mTriangleTopMargin + mTriangleWidth / 2)
                 }
             }
             canvas?.drawPath(mPath, mPaint)
