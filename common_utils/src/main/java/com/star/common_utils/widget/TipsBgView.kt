@@ -32,8 +32,8 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     private val mContext: Context = context
     private lateinit var mShader: LinearGradient
-    private var mPaint: Paint
-    private var mPath: Path
+    private val mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val mPath: Path = Path()
     private lateinit var mRectF: RectF
     private var mRectInited = false
 
@@ -56,6 +56,7 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     var mTriangleLeftMargin = 0f
         set(value) {
             field = value
+            initRectFs()
             invalidate()
         }
 
@@ -63,6 +64,7 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     var mTriangleTopMargin = 0f
         set(value) {
             field = value
+            initRectFs()
             invalidate()
         }
 
@@ -138,10 +140,7 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
     init {
-        mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        mPaint.setShadowLayer(mShadowRadius, 0f, 0f, mShadowColor)
         mPaint.style = Paint.Style.FILL
-        mPath = Path()
 
         val ta = context.obtainStyledAttributes(attrs, R.styleable.TipsBgView)
         mTriangleLeftMargin = ta.getDimension(R.styleable.TipsBgView_triangle_left_margin, AppUtil.dp2px(context, 20).toFloat())
@@ -153,9 +152,9 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         mEndColor = ta.getColor(R.styleable.TipsBgView_end_color, Color.parseColor("#FF5B33"))
         mShadowColor = ta.getColor(R.styleable.TipsBgView_shadow_color, Color.parseColor("#FF9862"))
         mTrianglePos = ta.getInt(R.styleable.TipsBgView_triangle_pos, POS_TRIANGLE_TOP)
-        mTriangleSideCornerRadius = ta.getDimension(R.styleable.TipsBgView_triangle_height, AppUtil.dp2px(context, 3).toFloat())
-        mTriangleTopCornerRadius = ta.getDimension(R.styleable.TipsBgView_triangle_height, AppUtil.dp2px(context, 3).toFloat())
-        mShadowRadius = ta.getDimension(R.styleable.TipsBgView_shadow_radius, AppUtil.dp2px(context, 3).toFloat())
+        mTriangleSideCornerRadius = ta.getDimension(R.styleable.TipsBgView_triangle_side_corners_radius, AppUtil.dp2px(context, 3).toFloat())
+        mTriangleTopCornerRadius = ta.getDimension(R.styleable.TipsBgView_triangle_top_corners_radius, AppUtil.dp2px(context, 2).toFloat())
+        mShadowRadius = ta.getDimension(R.styleable.TipsBgView_shadow_radius, AppUtil.dp2px(context, 0).toFloat())
         ta.recycle()
     }
 

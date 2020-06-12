@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clipChildren="false">
@@ -11,15 +12,12 @@
         android:layout_height="67dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shadow_radius="0dp"
-        app:triangle_side_corners_radius="6px"
-        app:triangle_top_corners_radius="2px">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/img_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="54dp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="-8dp"
             android:src="@drawable/dache_person" />
@@ -33,9 +31,9 @@
             android:layout_toRightOf="@+id/img_person"
             android:gravity="center"
             android:paddingTop="8dp"
-            android:text="快车·优享"
             android:textColor="@android:color/white"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            tools:text="快车·优享·出租车·专车·豪华车·优享" />
 
         <TextView
             android:id="@+id/tv_tip_2"
@@ -46,10 +44,10 @@
             android:layout_toRightOf="@+id/img_person"
             android:gravity="center"
             android:paddingTop="8dp"
-            android:text="叫“打车”了!"
             android:textColor="@android:color/white"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="叫“打车”了!" />
 
         <ImageView
             android:id="@+id/img_tip_close"
