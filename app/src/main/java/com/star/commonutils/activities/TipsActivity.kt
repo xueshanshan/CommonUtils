@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.star.common_utils.utils.AppUtil
 import com.star.common_utils.widget.TipsBgView
 import com.star.common_utils.widget.TipsCommonView
 import com.star.commonutils.R
@@ -38,23 +39,23 @@ class TipsActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         v?.run {
-//            mTipsDachePopView = TipsDachePopView(this@TipsActivity)
-//            mTipsDachePopView.show(this@TipsActivity, v)
-            mTipsCommonView = TipsCommonView(this@TipsActivity)
-            when (v.id) {
-                R.id.text1, R.id.text2, R.id.text3, R.id.text5 -> {
-                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_TOP)
-                }
-                R.id.text4 -> {
-                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_LEFT)
-                }
-                R.id.text6 -> {
-                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_RIGHT)
-                }
-                R.id.text7, R.id.text8, R.id.text9 -> {
-                    mTipsCommonView.show(this@TipsActivity, "这是很长的文案很长的文案很长的文案很长的文案", v, TipsBgView.POS_TRIANGLE_BOTTOM)
-                }
-            }
+            mTipsDachePopView = TipsDachePopView(this@TipsActivity)
+            mTipsDachePopView.show(this@TipsActivity, v, -AppUtil.dp2px(this@TipsActivity, 1))
+//            mTipsCommonView = TipsCommonView(this@TipsActivity)
+//            when (id) {
+//                R.id.text1, R.id.text2, R.id.text3, R.id.text5 -> {
+//                    mTipsCommonView.show(this@TipsActivity, "这是新手引导", v, TipsBgView.POS_TRIANGLE_TOP)
+//                }
+//                R.id.text4 -> {
+//                    mTipsCommonView.show(this@TipsActivity, "这是新手引导", v, TipsBgView.POS_TRIANGLE_LEFT)
+//                }
+//                R.id.text6 -> {
+//                    mTipsCommonView.show(this@TipsActivity, "这是新手引导", v, TipsBgView.POS_TRIANGLE_RIGHT)
+//                }
+//                R.id.text7, R.id.text8, R.id.text9 -> {
+//                    mTipsCommonView.show(this@TipsActivity, "这是新手引导", v, TipsBgView.POS_TRIANGLE_BOTTOM)
+//                }
+//            }
         }
     }
 }

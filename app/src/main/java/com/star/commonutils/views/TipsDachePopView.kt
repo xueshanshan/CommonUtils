@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.star.common_utils.utils.AppUtil
 import com.star.common_utils.utils.UIUtil
-import com.star.common_utils.utils.UIUtil.removeViewFromParent
 import com.star.common_utils.widget.TipsBgView
 import com.star.commonutils.R
 
@@ -49,33 +48,32 @@ class TipsDachePopView(val mContext: Context) {
         mTvTip2.setTextSize(TypedValue.COMPLEX_UNIT_PX, (if (text1.isEmpty()) AppUtil.dp2px(mContext, 15) else AppUtil.dp2px(mContext, 18)).toFloat())
     }
 
-    fun show(activity: Activity?, view: View?) {
-        if (mRootView.parent != null) {
-            removeViewFromParent(mRootView)
-            mShowCount = 0
-        }
+    fun show(activity: Activity?, view: View?, offset: Int) {
         if (activity == null) {
             return
         }
-        mShowCount++;
+        mShowCount = 0
         view?.post {
             view.run {
-                if (mShowCount > 0) {
-                    val location = IntArray(2)
-                    getLocationOnScreen(location)
-                    val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    layoutParams.topMargin = (location[1] + height - AppUtil.dp2px(mContext, 10)).toInt()
-                    mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                    if (location[0] + width / 2 <= UIUtil.getScreenAvailAbleSize(mContext).x / 2 + AppUtil.dp2px(mContext, 5)) {
-                        layoutParams.leftMargin = 0
-                    } else {
-                        layoutParams.leftMargin = UIUtil.getScreenAvailAbleSize(mContext).x - AppUtil.dp2px(mContext, 4) - mRootView.measuredWidth
-                    }
-                    mTipsBgView.mTriangleLeftMargin = (location[0] + width / 2 - layoutParams.leftMargin - AppUtil.dp2px(mContext, 8)).toFloat()
-                    val parent = activity.window.decorView as FrameLayout
-                    parent.addView(mRootView, layoutParams)
-                    doShowAnimation()
+                //可能post还未到达时调用了dismiss，那么此时不再做展示
+                if (mShowCount < 0) {
+                    return@run
                 }
+                val location = IntArray(2)
+                getLocationOnScreen(location)
+                if (location[1] == 0) {
+                    return@run
+                }
+                val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                layoutParams.topMargin = location[1] + height + offset
+                mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                if (location[0] + width / 2 <= UIUtil.getScreenAvailAbleSize(mContext).x / 2 + AppUtil.dp2px(mContext, 5)) {
+                    layoutParams.leftMargin = 0
+                } else {
+                    layoutParams.leftMargin = UIUtil.getScreenAvailAbleSize(mContext).x - AppUtil.dp2px(mContext, 4) - mRootView.measuredWidth
+                }
+                mTipsBgView.mTriangleLeftMargin = (location[0] + width / 2 - layoutParams.leftMargin - AppUtil.dp2px(mContext, 8)).toFloat()
+                addViewToParent(activity, layoutParams)
             }
         }
     }
@@ -140,15 +138,15 @@ class TipsDachePopView(val mContext: Context) {
         }
     }
 
-    fun isShown(): Boolean {
-        return mShowCount > 0
+    fun isShowing(): Boolean {
+        return mShowCount == 1
     }
 
     fun dismiss() {
-        if (!isShown()) {
+        if (mShowCount <= 0) {
+            mShowCount = -1
             return
         }
-        mShowCount--
         val scaleXAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleX", 1f, 0f)
         scaleXAnimationContentView.duration = 300
         val scaleYAnimationContentView = ObjectAnimator.ofFloat(mRootView, "scaleY", 1f, 0f)
@@ -163,7 +161,7 @@ class TipsDachePopView(val mContext: Context) {
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                removeViewFromParent(mRootView)
+                removeViewFromParent()
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -175,5 +173,23 @@ class TipsDachePopView(val mContext: Context) {
             }
 
         })
+    }
+
+    private fun addViewToParent(activity: Activity?, layoutParams: FrameLayout.LayoutParams) {
+        activity?.window?.run {
+            removeViewFromParent()
+            val parent = decorView as FrameLayout
+            parent.addView(mRootView, layoutParams)
+            doShowAnimation()
+            mShowCount = 1
+        }
+    }
+
+    private fun removeViewFromParent() {
+        mRootView.parent?.let {
+            val frameLayout = it as FrameLayout
+            frameLayout.removeView(mRootView)
+            mShowCount = -1
+        }
     }
 }

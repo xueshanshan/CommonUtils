@@ -116,5 +116,7 @@
         <attr name="triangle_top_corners_radius" format="dimension" />
         <attr name="start_color" format="color" />
         <attr name="end_color" format="color" />
+        <attr name="shadow_color" format="color" />
+        <attr name="shadow_radius" format="dimension" />
     </declare-styleable>
 </resources>

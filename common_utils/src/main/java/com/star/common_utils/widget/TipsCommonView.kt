@@ -24,26 +24,37 @@ class TipsCommonView(val mContext: Context) {
     private val mImgClose = mRootView.findViewById<ImageView>(R.id.img_close)
     private lateinit var scaleAnimationX: ObjectAnimator
     private lateinit var scaleAnimationY: ObjectAnimator
-    private lateinit var mActivity: Activity
+    private var mShowCount = -1;
+    private var mCloseClickCallBack: (() -> Unit)? = null
 
     init {
         mImgClose.setOnClickListener {
+            mCloseClickCallBack?.invoke()
             dismiss()
         }
     }
 
-    fun show(activity: Activity, text: String, view: View?, @TipsBgView.TrianglePos tipsPos: Int) {
-        if (mRootView.parent != null) {
-            removeViewFromParent()
+    fun setCloseClickCallBack(calback: (() -> Unit)?) {
+        mCloseClickCallBack = calback
+    }
+
+    fun show(activity: Activity?, text: String, view: View?, @TipsBgView.TrianglePos tipsPos: Int) {
+        if (activity == null) {
+            return
         }
         mTvTip.text = text
-        mActivity = activity
+        mShowCount = 0
         view?.post {
             view.run {
+                //可能post还未到达时调用了dismiss，那么此时不再做展示
+                if (mShowCount < 0) {
+                    return@run
+                }
                 val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 val location = IntArray(2)
                 getLocationOnScreen(location)
                 mRootView.mTrianglePos = tipsPos
+                mTvTip.setPadding((mTvTip.paddingLeft + mRootView.mShadowRadius).toInt(), (mTvTip.paddingTop + mRootView.mShadowRadius).toInt(), (mTvTip.paddingRight + mRootView.mShadowRadius).toInt(), (mTvTip.paddingBottom + mRootView.mShadowRadius).toInt())
                 when (tipsPos) {
                     TipsBgView.POS_TRIANGLE_TOP -> {
                         mTipLayout.setPadding(0, mRootView.mTriangleHeight.toInt(), 0, 0)
@@ -53,9 +64,7 @@ class TipsCommonView(val mContext: Context) {
                         val size = if (beyondSize > 0) 0 else beyondSize
                         layoutParams.leftMargin = location[0] + size
                         mRootView.mTriangleLeftMargin = mRootView.paddingLeft + width / 2f - size
-                        val parent = activity.window.decorView as FrameLayout
-                        parent.addView(mRootView, layoutParams)
-                        doShowAnimation()
+                        addViewToParent(activity, layoutParams)
                     }
                     TipsBgView.POS_TRIANGLE_BOTTOM -> {
                         mTipLayout.setPadding(0, 0, 0, mRootView.mTriangleHeight.toInt())
@@ -65,9 +74,7 @@ class TipsCommonView(val mContext: Context) {
                         val size = if (beyondSize > 0) 0 else beyondSize
                         layoutParams.leftMargin = location[0] + size
                         mRootView.mTriangleLeftMargin = mRootView.paddingLeft + width / 2f - size
-                        val parent = activity.window.decorView as FrameLayout
-                        parent.addView(mRootView, layoutParams)
-                        doShowAnimation()
+                        addViewToParent(activity, layoutParams)
                     }
                     TipsBgView.POS_TRIANGLE_LEFT -> {
                         mTipLayout.setPadding(mRootView.mTriangleHeight.toInt(), 0, 0, 0)
@@ -75,9 +82,7 @@ class TipsCommonView(val mContext: Context) {
                         layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
                         layoutParams.leftMargin = location[0] + width
                         mRootView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
-                        val parent = activity.window.decorView as FrameLayout
-                        parent.addView(mRootView, layoutParams)
-                        doShowAnimation()
+                        addViewToParent(activity, layoutParams)
                     }
                     TipsBgView.POS_TRIANGLE_RIGHT -> {
                         mTipLayout.setPadding(0, 0, mRootView.mTriangleHeight.toInt(), 0)
@@ -85,9 +90,7 @@ class TipsCommonView(val mContext: Context) {
                         layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
                         layoutParams.leftMargin = location[0] - mRootView.measuredWidth
                         mRootView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
-                        val parent = activity.window.decorView as FrameLayout
-                        parent.addView(mRootView, layoutParams)
-                        doShowAnimation()
+                        addViewToParent(activity, layoutParams)
                     }
                     else -> {
                         throw RuntimeException("tipsPos param is not correct")
@@ -102,19 +105,19 @@ class TipsCommonView(val mContext: Context) {
         scaleAnimationX = ObjectAnimator.ofFloat(mRootView, "scaleX", 0f, 1f)
         when (mRootView.mTrianglePos) {
             TipsBgView.POS_TRIANGLE_TOP -> {
-                mRootView.pivotX = mRootView.mTriangleLeftMargin
-                mRootView.pivotY = 0f
+                mRootView.pivotX = mRootView.mTriangleLeftMargin + mRootView.mShadowRadius
+                mRootView.pivotY = mRootView.mShadowRadius
             }
             TipsBgView.POS_TRIANGLE_BOTTOM -> {
-                mRootView.pivotX = mRootView.mTriangleLeftMargin
-                mRootView.pivotY = mRootView.measuredHeight.toFloat()
+                mRootView.pivotX = mRootView.mTriangleLeftMargin + mRootView.mShadowRadius
+                mRootView.pivotY = mRootView.measuredHeight - mRootView.mShadowRadius
             }
             TipsBgView.POS_TRIANGLE_LEFT -> {
-                mRootView.pivotX = 0f
+                mRootView.pivotX = mRootView.mShadowRadius
                 mRootView.pivotY = (mRootView.measuredHeight / 2).toFloat()
             }
             TipsBgView.POS_TRIANGLE_RIGHT -> {
-                mRootView.pivotX = mRootView.measuredWidth.toFloat()
+                mRootView.pivotX = mRootView.measuredWidth - mRootView.mShadowRadius
                 mRootView.pivotY = (mRootView.measuredHeight / 2).toFloat()
             }
         }
@@ -125,7 +128,16 @@ class TipsCommonView(val mContext: Context) {
         scaleAnimationY.start()
     }
 
+    fun isShowing(): Boolean {
+        return mShowCount == 1
+    }
+
     fun dismiss() {
+        if (mShowCount <= 0) {
+            mShowCount = -1
+            return
+        }
+        //只有mShowCount = 1的时候即真正在展示的时候再去做动画
         scaleAnimationX.reverse()
         scaleAnimationY.reverse()
         scaleAnimationX.addListener(object : Animator.AnimatorListener {
@@ -148,8 +160,21 @@ class TipsCommonView(val mContext: Context) {
         })
     }
 
-    protected fun removeViewFromParent() {
-        val frameLayout = mRootView.parent as FrameLayout
-        frameLayout.removeView(mRootView)
+    private fun addViewToParent(activity: Activity?, layoutParams: FrameLayout.LayoutParams) {
+        activity?.window?.run {
+            removeViewFromParent()
+            val parent = decorView as FrameLayout
+            parent.addView(mRootView, layoutParams)
+            doShowAnimation()
+            mShowCount = 1
+        }
+    }
+
+    private fun removeViewFromParent() {
+        mRootView.parent?.let {
+            val frameLayout = it as FrameLayout
+            frameLayout.removeView(mRootView)
+            mShowCount = -1
+        }
     }
 }

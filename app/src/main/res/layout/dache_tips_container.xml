@@ -12,8 +12,9 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:triangle_height="8dp"
-        app:triangle_width="14dp">
+        app:shadow_radius="0dp"
+        app:triangle_side_corners_radius="6px"
+        app:triangle_top_corners_radius="2px">
 
         <ImageView
             android:id="@+id/img_person"
