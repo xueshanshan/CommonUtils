@@ -145,63 +145,55 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
                     tipLayout.setPadding(0, mTipsBgView.mTriangleHeight.toInt(), 0, 0)
                     mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
                     layoutParams.topMargin = location[1] + height + commonParams.verticalOffset
-                    when {
-                        location[0] + width / 2 == UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
-                            layoutParams.leftMargin = (UIUtil.getScreenAvailAbleSize(mContext).x / 2f - mRootView.measuredWidth / 2f).toInt()
-                            mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth / 2f
-                        }
-                        location[0] + width / 2 < UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
-                            layoutParams.leftMargin = location[0] + commonParams.offset
-                            mTipsBgView.mTriangleLeftMargin = width / 2f - commonParams.offset
-                        }
-                        else -> {
-                            layoutParams.leftMargin = location[0] - mRootView.measuredWidth + width
-                            mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth - width / 2f + commonParams.offset
-                        }
-                    }
-                    addViewToParent(commonParams.activity, layoutParams)
+                    showTopOrBottom(location, layoutParams, commonParams)
                 }
                 TipsBgView.POS_TRIANGLE_BOTTOM -> {
                     tipLayout.setPadding(0, 0, 0, mTipsBgView.mTriangleHeight.toInt())
                     mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                    layoutParams.topMargin = location[1] - mRootView.measuredHeight
-                    when {
-                        location[0] + width / 2 == UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
-                            layoutParams.leftMargin = (UIUtil.getScreenAvailAbleSize(mContext).x / 2f - mRootView.measuredWidth / 2f).toInt()
-                            mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth / 2f
-                        }
-                        location[0] + width / 2 < UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
-                            layoutParams.leftMargin = location[0] + commonParams.offset
-                            mTipsBgView.mTriangleLeftMargin = width / 2f - commonParams.offset
-                        }
-                        else -> {
-                            layoutParams.leftMargin = location[0] - mRootView.measuredWidth + width
-                            mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth - width / 2f + commonParams.offset
-                        }
-                    }
-                    addViewToParent(commonParams.activity, layoutParams)
+                    layoutParams.topMargin = location[1] - mRootView.measuredHeight + commonParams.verticalOffset
+                    showTopOrBottom(location, layoutParams, commonParams)
                 }
                 TipsBgView.POS_TRIANGLE_LEFT -> {
                     tipLayout.setPadding(mTipsBgView.mTriangleHeight.toInt(), 0, 0, 0)
                     mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                    layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
                     layoutParams.leftMargin = location[0] + width + commonParams.offset
-                    mTipsBgView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
-                    addViewToParent(commonParams.activity, layoutParams)
+                    showLeftOrRight(layoutParams, location, commonParams)
                 }
                 TipsBgView.POS_TRIANGLE_RIGHT -> {
                     tipLayout.setPadding(0, 0, mTipsBgView.mTriangleHeight.toInt(), 0)
                     mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                    layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
                     layoutParams.leftMargin = location[0] - mRootView.measuredWidth + commonParams.offset
-                    mTipsBgView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
-                    addViewToParent(commonParams.activity, layoutParams)
+                    showLeftOrRight(layoutParams, location, commonParams)
                 }
                 else -> {
                     throw RuntimeException("tipsPos param is not correct")
                 }
             }
         }
+    }
+
+    private fun View.showTopOrBottom(location: IntArray, layoutParams: FrameLayout.LayoutParams, commonParams: TipsCommonParams) {
+        when {
+            location[0] + width / 2 == UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
+                layoutParams.leftMargin = (UIUtil.getScreenAvailAbleSize(mContext).x / 2f - mRootView.measuredWidth / 2f).toInt()
+                mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth / 2f
+            }
+            location[0] + width / 2 < UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
+                layoutParams.leftMargin = location[0] + commonParams.offset
+                mTipsBgView.mTriangleLeftMargin = width / 2f - commonParams.offset
+            }
+            else -> {
+                layoutParams.leftMargin = location[0] - mRootView.measuredWidth + width
+                mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth - width / 2f + commonParams.offset
+            }
+        }
+        addViewToParent(commonParams.activity, layoutParams)
+    }
+
+    private fun View.showLeftOrRight(layoutParams: FrameLayout.LayoutParams, location: IntArray, commonParams: TipsCommonParams) {
+        layoutParams.topMargin = location[1] + height / 2 - mRootView.measuredHeight / 2
+        mTipsBgView.mTriangleTopMargin = (mRootView.measuredHeight / 2).toFloat()
+        addViewToParent(commonParams.activity, layoutParams)
     }
 
     /**

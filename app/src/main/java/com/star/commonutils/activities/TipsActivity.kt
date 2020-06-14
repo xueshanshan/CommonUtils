@@ -35,14 +35,14 @@ class TipsActivity : BaseActivity(), View.OnClickListener {
         text8.setOnClickListener(this)
         text9.setOnClickListener(this)
         mTipsDachePopView = TipsDachePopView(this@TipsActivity)
+        mTipsDachePopView.setContent("快车·优享·出租车·专车·豪华车·优享", "都叫“打车”了!")
         mTipsCommonView = TipsCommonWrapperView(this@TipsActivity)
     }
 
     override fun onClick(v: View?) {
         v?.run {
-//            mTipsDachePopView.setContent("快车·优享·出租车·专车·豪华车·优享", "都叫“打车”了!")
 //            mTipsDachePopView.show {
-//                tipsPos = POS_TRIANGLE_TOP
+//                tipsPos = TipsBgView.POS_TRIANGLE_TOP
 //                activity = this@TipsActivity
 //                anchorView = v
 //            }
