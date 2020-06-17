@@ -30,7 +30,6 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         const val POS_TRIANGLE_BOTTOM = 4
     }
 
-    private val mContext: Context = context
     private lateinit var mShader: LinearGradient
     private val mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val mPath: Path = Path()
@@ -46,98 +45,45 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     //三角形的位置
     @TrianglePos
     var mTrianglePos = POS_TRIANGLE_TOP
-        set(value) {
-            field = value
-            initRectFs()
-            invalidate()
-        }
 
     //三角中心距离左边位置（位置居上和居下生效）
     var mTriangleLeftMargin = 0f
-        set(value) {
-            field = value
-            initRectFs()
-            invalidate()
-        }
 
     //三角中心距离上边位置（位置居左和居右生效）
     var mTriangleTopMargin = 0f
-        set(value) {
-            field = value
-            initRectFs()
-            invalidate()
-        }
 
     //三角宽度
     var mTriangleWidth = 0f
-        set(value) {
-            field = value
-            initRectFs()
-            invalidate()
-        }
 
     //三角高度
     var mTriangleHeight = 0f
-        set(value) {
-            field = value
-            initRectFs()
-            invalidate()
-        }
 
     //圆角角度
     var mCornerRadius = 0f
-        set(value) {
-            field = value
-            invalidate()
-        }
 
     //渐变开始颜色
     var mStartColor = 0
-        set(value) {
-            field = value
-            initShader()
-            invalidate()
-        }
 
     //渐变结束颜色
-    private var mEndColor = 0
-        set(value) {
-            field = value
-            initShader()
-            invalidate()
-        }
+    var mEndColor = 0
 
     //三角形边上圆角
     var mTriangleSideCornerRadius = 0f
-        set(value) {
-            field = value
-            invalidate()
-        }
 
     //三角形顶部圆角
     var mTriangleTopCornerRadius = 0f
-        set(value) {
-            field = value
-            invalidate()
-        }
+
+    //阴影半径
+    var mShadowRadius = 0f
 
     //阴影颜色
-    var mShadowRadius = 0f
-        set(value) {
-            field = value
-            mPaint.setShadowLayer(mShadowRadius, 0f, 0f, mShadowColor)
-            initRectFs()
-            invalidate()
-        }
-
-    //阴影角度
     var mShadowColor = 0
-        set(value) {
-            field = value
-            mPaint.setShadowLayer(mShadowRadius, 0f, 0f, mShadowColor)
-            initRectFs()
-            invalidate()
-        }
+
+    fun doInvalidate() {
+        initRectFs()
+        initShader()
+        invalidate()
+    }
 
     init {
         mPaint.style = Paint.Style.FILL
@@ -280,5 +226,6 @@ class TipsBgView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
         mShader = LinearGradient(0f, 0f, mTotalWidth, 0f, mStartColor, mEndColor, Shader.TileMode.CLAMP)
         mPaint.shader = mShader
+        mPaint.setShadowLayer(mShadowRadius, 0f, 0f, mShadowColor)
     }
 }

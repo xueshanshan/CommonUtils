@@ -70,6 +70,7 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
         if (!verifyResult) {
             return
         }
+        setParams(params)
         mShowCount = 0
         params.anchorView?.post {
             //可能post还未到达时调用了dismiss，那么此时不再做展示
@@ -110,6 +111,35 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
             }
         }
         return true
+    }
+
+    /**
+     * 设置参数
+     */
+    open fun setParams(params: TipsCommonParams) {
+        mTipsBgView.apply {
+            if (params.triangleWidth != 0f) {
+                mTriangleWidth = params.triangleWidth
+            }
+            if (params.triangleHeight != 0f) {
+                mTriangleHeight = params.triangleHeight
+            }
+            if (params.cornerRadius != 0f) {
+                mCornerRadius = params.cornerRadius
+            }
+            if (params.startColor != 0) {
+                mStartColor = params.startColor
+            }
+            if (params.endColor != 0) {
+                mEndColor = params.endColor
+            }
+            if (params.shadowRadius != 0f) {
+                mShadowRadius = params.shadowRadius
+            }
+            if (params.shadowColor != 0) {
+                mShadowColor = params.shadowColor
+            }
+        }
     }
 
     /**
@@ -175,8 +205,8 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
     private fun View.showTopOrBottom(location: IntArray, layoutParams: FrameLayout.LayoutParams, commonParams: TipsCommonParams) {
         when {
             location[0] + width / 2 == UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
-                layoutParams.leftMargin = (UIUtil.getScreenAvailAbleSize(mContext).x / 2f - mRootView.measuredWidth / 2f).toInt()
-                mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth / 2f
+                layoutParams.leftMargin = (UIUtil.getScreenAvailAbleSize(mContext).x / 2f - mRootView.measuredWidth / 2f).toInt() + commonParams.horizontalOffset
+                mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth / 2f - commonParams.horizontalOffset
             }
             location[0] + width / 2 < UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
                 layoutParams.leftMargin = location[0] + commonParams.horizontalOffset
@@ -258,6 +288,7 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
     protected fun addViewToParent(activity: Activity?, layoutParams: FrameLayout.LayoutParams) {
         activity?.window?.run {
             removeViewFromParent()
+            mTipsBgView.doInvalidate()
             val parent = decorView as FrameLayout
             parent.addView(mRootView, layoutParams)
             doShowAnimation()

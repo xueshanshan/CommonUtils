@@ -2,6 +2,7 @@ package com.star.commonutils.activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.star.common_utils.utils.AppUtil
@@ -76,7 +77,7 @@ class TipsActivity : BaseActivity(), View.OnClickListener {
                         content = "三角在右，整体往左偏移10dp"
                     }
                 }
-                R.id.text7, R.id.text8, R.id.text9 -> {
+                R.id.text7, R.id.text9 -> {
                     mTipsCommonView.show {
                         tipsPos = TipsBgView.POS_TRIANGLE_BOTTOM
                         verticalOffset = AppUtil.dp2px(this@TipsActivity, -10)
@@ -85,22 +86,32 @@ class TipsActivity : BaseActivity(), View.OnClickListener {
                         content = "三角在下，整体往上偏移10dp"
                     }
                 }
+                R.id.text8 -> {
+                    mTipsCommonView.show {
+                        tipsPos = TipsBgView.POS_TRIANGLE_BOTTOM
+                        verticalOffset = AppUtil.dp2px(this@TipsActivity, -10)
+                        horizontalOffset = AppUtil.dp2px(this@TipsActivity, -10)
+                        activity = this@TipsActivity
+                        anchorView = v
+                        content = "三角在下，整体往上偏移10dp, 往左偏移10dp"
+                    }
+                }
                 R.id.text10 -> {
                     mTipsCommonView.show {
                         tipsPos = TipsBgView.POS_TRIANGLE_TOP
-                        horizontalOffset = AppUtil.dp2px(this@TipsActivity, -20)
+                        horizontalOffset = AppUtil.dp2px(this@TipsActivity, -40)
                         activity = this@TipsActivity
                         anchorView = v
-                        content = "三角在上，整体往左偏移20dp"
+                        content = "三角在上，整体往左偏移40dp"
                     }
                 }
                 R.id.text11 -> {
                     mTipsCommonView.show {
                         tipsPos = TipsBgView.POS_TRIANGLE_TOP
-                        horizontalOffset = AppUtil.dp2px(this@TipsActivity, 20)
+                        horizontalOffset = AppUtil.dp2px(this@TipsActivity, 40)
                         activity = this@TipsActivity
                         anchorView = v
-                        content = "三角在上，整体往右偏移20dp"
+                        content = "三角在上，整体往右偏移40dp"
                     }
                 }
             }
