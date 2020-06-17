@@ -156,13 +156,13 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
                 TipsBgView.POS_TRIANGLE_LEFT -> {
                     tipLayout.setPadding(mTipsBgView.mTriangleHeight.toInt(), 0, 0, 0)
                     mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                    layoutParams.leftMargin = location[0] + width + commonParams.offset
+                    layoutParams.leftMargin = location[0] + width + commonParams.horizontalOffset
                     showLeftOrRight(layoutParams, location, commonParams)
                 }
                 TipsBgView.POS_TRIANGLE_RIGHT -> {
                     tipLayout.setPadding(0, 0, mTipsBgView.mTriangleHeight.toInt(), 0)
                     mRootView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                    layoutParams.leftMargin = location[0] - mRootView.measuredWidth + commonParams.offset
+                    layoutParams.leftMargin = location[0] - mRootView.measuredWidth + commonParams.horizontalOffset
                     showLeftOrRight(layoutParams, location, commonParams)
                 }
                 else -> {
@@ -179,12 +179,12 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
                 mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth / 2f
             }
             location[0] + width / 2 < UIUtil.getScreenAvailAbleSize(mContext).x / 2 -> {
-                layoutParams.leftMargin = location[0] + commonParams.offset
-                mTipsBgView.mTriangleLeftMargin = width / 2f - commonParams.offset
+                layoutParams.leftMargin = location[0] + commonParams.horizontalOffset
+                mTipsBgView.mTriangleLeftMargin = width / 2f - commonParams.horizontalOffset
             }
             else -> {
-                layoutParams.leftMargin = location[0] - mRootView.measuredWidth + width
-                mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth - width / 2f + commonParams.offset
+                layoutParams.leftMargin = location[0] - mRootView.measuredWidth + width + commonParams.horizontalOffset
+                mTipsBgView.mTriangleLeftMargin = mRootView.measuredWidth - width / 2f - commonParams.horizontalOffset
             }
         }
         addViewToParent(commonParams.activity, layoutParams)

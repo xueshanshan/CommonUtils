@@ -17,7 +17,7 @@ class TipsCommonParams {
     var anchorView: View? = null
 
     //偏移量  anchorView位置在屏幕左边居左对齐，在屏幕中间居中对齐(忽略偏移量)，在屏幕右面居右对齐
-    var offset = 0 //小于0往左偏移，大于0往右偏移
+    var horizontalOffset = 0 //小于0往左偏移，大于0往右偏移
 
     //竖直方向上的偏移量， 只有在箭头居上或居下的时候起作用
     var verticalOffset = 0 //小于0往上偏移，大于0往下偏移
