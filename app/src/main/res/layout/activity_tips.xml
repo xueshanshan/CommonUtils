@@ -56,11 +56,11 @@
         android:text="text2"
         android:textColor="@android:color/white"
         android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"/>
+        app:layout_constraintVertical_bias="0.15" />
 
     <TextView
         android:id="@+id/text3"
@@ -135,4 +135,35 @@
         android:textSize="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <com.star.common_utils.widget.TipsBgView
+        android:id="@+id/tips_bg_view"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        app:end_color="#F5FFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shadow_color="#30ff0000"
+        app:shadow_dx="2dp"
+        app:shadow_dy="3dp"
+        app:shadow_radius="10dp"
+        app:start_color="#F5FFFF"
+        app:stroke_color="#3029B395"
+        app:stroke_width="2dp"
+        app:triangle_height="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="我是文案第三方" />
+    </com.star.common_utils.widget.TipsBgView>
 </android.support.constraint.ConstraintLayout>

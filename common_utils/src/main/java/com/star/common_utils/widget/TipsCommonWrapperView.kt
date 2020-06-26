@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -24,20 +25,22 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
     private val mImgClose: View? = getImgCloseView()
     private val mTvContent: TextView? = getTextContentView()
 
-    private var mCloseClickCallBack: (() -> Unit)? = null
+    private var mDismissCallBack: ((closeClick: Boolean) -> Unit)? = null
     private lateinit var scaleAnimationX: ObjectAnimator
     private lateinit var scaleAnimationY: ObjectAnimator
     protected var mShowCount = -1;
+    private var mDismissView: View? = null
+    private var mCloseClick: Boolean = false
 
     init {
         mImgClose?.setOnClickListener {
-            mCloseClickCallBack?.invoke()
+            mCloseClick = true
             dismiss()
         }
     }
 
-    fun setCloseClickCallBack(callback: (() -> Unit)?) {
-        mCloseClickCallBack = callback
+    fun setDismissCallback(callback: ((closeClick: Boolean) -> Unit)?) {
+        mDismissCallBack = callback
     }
 
     @LayoutRes
@@ -89,6 +92,8 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
             mShowCount = -1
             return
         }
+        mDismissCallBack?.invoke(mCloseClick)
+        mCloseClick = false
         //只有mShowCount = 1的时候即真正在展示的时候再去做动画
         doDismissAnimation()
     }
@@ -136,10 +141,21 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
             if (params.shadowRadius != 0f) {
                 mShadowRadius = params.shadowRadius
             }
+            mShadowDy = params.shadowDy
             if (params.shadowColor != 0) {
                 mShadowColor = params.shadowColor
             }
         }
+        if (params.touchOutsideClose && mDismissView == null) {
+            mDismissView = View(mContext)
+            mDismissView?.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    dismiss()
+                    return false
+                }
+            })
+        }
+        mImgClose?.visibility = if (params.closeVisiable) View.VISIBLE else View.GONE
     }
 
     /**
@@ -290,6 +306,9 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
             removeViewFromParent()
             mTipsBgView.doInvalidate()
             val parent = decorView as FrameLayout
+            if (mDismissView != null) {
+                parent.addView(mDismissView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            }
             parent.addView(mRootView, layoutParams)
             doShowAnimation()
             mShowCount = 1
@@ -302,6 +321,9 @@ open class TipsCommonWrapperView(protected val mContext: Context) {
     protected fun removeViewFromParent() {
         mRootView.parent?.let {
             val frameLayout = it as FrameLayout
+            if (mDismissView != null) {
+                frameLayout.removeView(mDismissView)
+            }
             frameLayout.removeView(mRootView)
             mShowCount = -1
         }

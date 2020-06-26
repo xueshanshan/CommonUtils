@@ -9,7 +9,7 @@ import android.view.View
 class TipsCommonParams {
 
     @TipsBgView.TrianglePos
-    var tipsPos: Int = TipsBgView.POS_TRIANGLE_TOP
+    var tipsPos: Int = TipsBgView.POS_TRIANGLE_TOP  //三角所在位置，默认三角在上
 
     //activity
     var activity: Activity? = null  //必传，不然展示不出来
@@ -52,7 +52,15 @@ class TipsCommonParams {
     //阴影半径
     var shadowRadius = 0f
 
+    //阴影y轴偏移
+    var shadowDy = 0f
+
     //阴影颜色
     var shadowColor = 0
 
+    //点击其他区域是否消失
+    var touchOutsideClose = false
+
+    //关闭按钮是否展示 默认展示
+    var closeVisiable = true
 }
